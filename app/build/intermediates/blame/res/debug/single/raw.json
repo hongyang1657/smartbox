@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "C:\\FitmeSound\\smartbox\\app\\build\\intermediates\\res\\merged\\debug\\raw\\wake_up.mp3",
+        "source": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\raw\\wake_up.mp3"
+    },
+    {
+        "merged": "C:\\FitmeSound\\smartbox\\app\\build\\intermediates\\res\\merged\\debug\\raw\\siri.m4a",
+        "source": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\raw\\siri.m4a"
+    },
+    {
+        "merged": "C:\\FitmeSound\\smartbox\\app\\build\\intermediates\\res\\merged\\debug\\raw\\ring.mp3",
+        "source": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\raw\\ring.mp3"
+    }
+]

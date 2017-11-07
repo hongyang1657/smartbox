@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Msc">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/src/main/jniLibs/SAI3229/Msc.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,200 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:2:1-78:12
+	package
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:3:5-23
+		INJECTED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml
+		INJECTED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml
+		INJECTED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml
+		INJECTED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:5:5-83
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:5:22-81
+uses-permission#android.permission.CHANGE_NETWORK_STATE
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:6:5-78
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:6:22-76
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:7:5-72
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:7:22-70
+uses-permission#android.permission.CHANGE_WIFI_MULTICAST_STATE
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:8:5-86
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:8:22-83
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:9:5-76
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:9:22-73
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:10:5-79
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:10:22-77
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:11:5-80
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:11:22-78
+uses-permission#android.permission.INTERNET
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:12:5-66
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:12:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:13:5-78
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:13:22-76
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:15:5-81
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:15:22-78
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:16:5-70
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:16:22-68
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:18:5-74
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:18:22-72
+uses-permission#android.permission.SHUTDOWN
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:20:5-66
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:20:22-64
+uses-permission#android.permission.DISABLE_KEYGUARD
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:22:5-74
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:22:22-72
+uses-permission#android.permission.WAKE_LOCK
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:23:5-68
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:23:22-65
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:25:5-75
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:25:22-73
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:27:5-80
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:27:22-78
+uses-permission#android.permission.ACCESS_LOCATION_EXTRA_COMMANDS
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:29:5-88
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:29:22-86
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:31:5-78
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:31:22-76
+application
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:33:5-76:19
+MERGED from [com.android.support:appcompat-v7:25.3.0] C:\Users\hongy\.android\build-cache\fc92daf5a102fa71ab52796d95b8948d621f4d0b\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-v4:25.3.0] C:\Users\hongy\.android\build-cache\244b181aac3bc70f820b2f3ad8e51c3a405261e9\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.0] C:\Users\hongy\.android\build-cache\33c5e81b95c380a3799084c8df5d633e50588351\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.0] C:\Users\hongy\.android\build-cache\74352735ee6a318df6a898ddd4593315760f7d2c\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.0] C:\Users\hongy\.android\build-cache\831f5dce92919ad29ddeb495f6878093da0dd13b\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.0] C:\Users\hongy\.android\build-cache\3e3fe58e81f908a25e85a21f0465b33b6bb2f340\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.0] C:\Users\hongy\.android\build-cache\a9145e6e118a01f97b8bb33d64e29a7a7c19e463\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.0] C:\Users\hongy\.android\build-cache\f4436de3a77d0152c373469f14bffb11773c8774\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-compat:25.3.0] C:\Users\hongy\.android\build-cache\9220ccb4e1313760e0c362f541aaa226b496df82\output\AndroidManifest.xml:29:5-20
+	android:sharedUserId
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:39:9-50
+	android:label
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:37:9-41
+	android:supportsRtl
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:38:9-35
+	android:allowBackup
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:35:9-35
+	android:icon
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:36:9-43
+	android:theme
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:40:9-40
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:34:9-46
+activity#fitme.ai.view.MainActivity
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:43:9-50:20
+	android:screenOrientation
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:44:13-49
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:43:19-60
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:45:13-49:29
+action#android.intent.action.MAIN
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:46:17-69
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:46:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:48:17-77
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:48:27-74
+activity#fitme.ai.view.LaunchActivity
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:52:9-54:20
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:52:19-54
+service#fitme.ai.service.MainService
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:57:9-63
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:57:18-61
+service#fitme.ai.service.MusicPlayerService
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:59:9-62
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:59:18-60
+receiver#fitme.ai.broadcast.BootBroadcastReceiver
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:62:9-66:20
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:62:19-74
+intent-filter#android.intent.action.BOOT_COMPLETED
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:63:13-65:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:64:17-78
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:64:25-76
+meta-data#LET_LICENSE
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:69:9-71:219
+	android:value
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:71:13-217
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:70:13-39
+meta-data#LET_CHANNEL
+ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:73:9-75:39
+	android:value
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:75:13-37
+	android:name
+		ADDED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml:74:13-39
+uses-sdk
+INJECTED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:25.3.0] C:\Users\hongy\.android\build-cache\fc92daf5a102fa71ab52796d95b8948d621f4d0b\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:25.3.0] C:\Users\hongy\.android\build-cache\244b181aac3bc70f820b2f3ad8e51c3a405261e9\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.0] C:\Users\hongy\.android\build-cache\33c5e81b95c380a3799084c8df5d633e50588351\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.3.0] C:\Users\hongy\.android\build-cache\74352735ee6a318df6a898ddd4593315760f7d2c\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.3.0] C:\Users\hongy\.android\build-cache\831f5dce92919ad29ddeb495f6878093da0dd13b\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.3.0] C:\Users\hongy\.android\build-cache\3e3fe58e81f908a25e85a21f0465b33b6bb2f340\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:animated-vector-drawable:25.3.0] C:\Users\hongy\.android\build-cache\a9145e6e118a01f97b8bb33d64e29a7a7c19e463\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.0] C:\Users\hongy\.android\build-cache\f4436de3a77d0152c373469f14bffb11773c8774\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-compat:25.3.0] C:\Users\hongy\.android\build-cache\9220ccb4e1313760e0c362f541aaa226b496df82\output\AndroidManifest.xml:21:5-23:58
+MERGED from [io.reactivex:rxandroid:1.2.1] C:\Users\hongy\.android\build-cache\76df2a64a33840c10e3e8b06c1d86eca877938c6\output\AndroidManifest.xml:19:5-43
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:25.3.0] C:\Users\hongy\.android\build-cache\fc92daf5a102fa71ab52796d95b8948d621f4d0b\output\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml
+		INJECTED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml
+		INJECTED from C:\FitmeSound\smartbox\app\src\main\AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:appcompat-v7:25.3.0] C:\Users\hongy\.android\build-cache\fc92daf5a102fa71ab52796d95b8948d621f4d0b\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-v4:25.3.0] C:\Users\hongy\.android\build-cache\244b181aac3bc70f820b2f3ad8e51c3a405261e9\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.0] C:\Users\hongy\.android\build-cache\33c5e81b95c380a3799084c8df5d633e50588351\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.0] C:\Users\hongy\.android\build-cache\74352735ee6a318df6a898ddd4593315760f7d2c\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.0] C:\Users\hongy\.android\build-cache\831f5dce92919ad29ddeb495f6878093da0dd13b\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.0] C:\Users\hongy\.android\build-cache\3e3fe58e81f908a25e85a21f0465b33b6bb2f340\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.0] C:\Users\hongy\.android\build-cache\a9145e6e118a01f97b8bb33d64e29a7a7c19e463\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.0] C:\Users\hongy\.android\build-cache\f4436de3a77d0152c373469f14bffb11773c8774\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-compat:25.3.0] C:\Users\hongy\.android\build-cache\9220ccb4e1313760e0c362f541aaa226b496df82\output\AndroidManifest.xml:25:5-27:34
+	android:value
+		ADDED from [com.android.support:appcompat-v7:25.3.0] C:\Users\hongy\.android\build-cache\fc92daf5a102fa71ab52796d95b8948d621f4d0b\output\AndroidManifest.xml:27:9-31
+	android:name
+		ADDED from [com.android.support:appcompat-v7:25.3.0] C:\Users\hongy\.android\build-cache\fc92daf5a102fa71ab52796d95b8948d621f4d0b\output\AndroidManifest.xml:26:9-47
