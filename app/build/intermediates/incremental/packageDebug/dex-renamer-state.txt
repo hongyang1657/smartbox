@@ -1,4 +1,4 @@
-#Mon Nov 06 16:10:12 CST 2017
+#Wed Nov 08 16:48:25 CST 2017
 base.0=C\:\\FitmeSound\\smartbox\\app\\build\\intermediates\\transforms\\jack\\debug\\folders\\1000\\1f\\main
 renamed.0=classes.dex
 file.0=C\:\\FitmeSound\\smartbox\\app\\build\\intermediates\\transforms\\jack\\debug\\folders\\1000\\1f\\main\\classes.dex

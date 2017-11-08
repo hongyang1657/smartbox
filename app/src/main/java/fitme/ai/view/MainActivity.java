@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -27,6 +28,7 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SynthesizerListener;
 
 import cn.com.broadlink.sdk.BLLet;
+import cn.com.broadlink.sdk.param.family.BLFamilyModuleInfo;
 import cn.com.broadlink.sdk.result.account.BLLoginResult;
 import cn.com.broadlink.sdk.result.family.BLAllFamilyInfoResult;
 import cn.com.broadlink.sdk.result.family.BLFamilyIdListGetResult;
@@ -51,16 +53,19 @@ import fitme.ai.utils.SignAndEncrypt;
 import fitme.ai.utils.WordsToVoice;
 import fitme.ai.view.impl.IGetYeelight;
 import okhttp3.ResponseBody;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.sai.commnpkg.DirectorBaseMsg;
 import org.sai.commnpkg.saiAPI_wrap;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -246,7 +251,7 @@ public class MainActivity extends Activity {
         bindDevice();
 
         //测试，博联云云对接
-        broadlinkAcountTest();
+        broadlinkAcount();
 
         //初始化短音效
         soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
@@ -280,37 +285,90 @@ public class MainActivity extends Activity {
     }
 
 
-    private BLAllFamilyInfoResult blAllFamilyInfoResult;
-    private List<String> nameList;
-    private void broadlinkAcountTest(){
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                try {
-                    BLLoginResult blLoginResult = BLLet.Account.login("15308630310","mayday3591657");
-                    sleep(3000);
-                    BLFamilyIdListGetResult blFamilyIdListGetResult = BLLet.Family.queryLoginUserFamilyIdList();
-                    Gson gson = new Gson();
-                    L.i("博联家庭id列表："+gson.toJson(blFamilyIdListGetResult));
-                    L.i("familyId:"+blFamilyIdListGetResult.getIdInfoList().get(0).getFamilyId());
-                    String familyId = blFamilyIdListGetResult.getIdInfoList().get(0).getFamilyId();
-                    sleep(3000);
-                    blAllFamilyInfoResult = BLLet.Family.queryAllFamilyInfos(new String[]{familyId});
-                    Gson gson1 = new Gson();
-                    L.logE("具体家庭信息："+gson1.toJson(blAllFamilyInfoResult));
-                    L.logE("模块信息："+gson1.toJson(blAllFamilyInfoResult.getAllInfos().get(0).getModuleInfos()));
-                    nameList = new LinkedList<String>();
-                    for (int i=0;i<blAllFamilyInfoResult.getAllInfos().get(0).getModuleInfos().size();i++){
-                        L.i("博联设备名："+blAllFamilyInfoResult.getAllInfos().get(0).getModuleInfos().get(i).getName());
-                        nameList.add(blAllFamilyInfoResult.getAllInfos().get(0).getModuleInfos().get(i).getName());
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+
+    private List<BLFamilyModuleInfo> blFamilyModuleInfo;
+
+    //博联账号登录，实现账号打通
+    private void broadlinkAcount(){
+        new BLLoginTask("15308630310","mayday3591657").execute();
     }
+
+    //博联登录
+    private class BLLoginTask extends AsyncTask<URL,Integer,BLLoginResult>{
+
+        private String account;
+        private String password;
+
+        public BLLoginTask(String account,String password){
+            this.account = account;
+            this.password = password;
+        }
+
+        @Override
+        protected BLLoginResult doInBackground(URL... params) {
+            BLLoginResult blLoginResult = BLLet.Account.login(account,password);
+            return blLoginResult;
+        }
+
+        @Override
+        protected void onPostExecute(BLLoginResult blLoginResult) {
+            super.onPostExecute(blLoginResult);
+            L.i("博联登录结果："+blLoginResult.getMsg());
+            if ("ok".equals(blLoginResult.getMsg().trim())){
+                new BLGetFamilyIdTask().execute();
+            }
+        }
+    }
+
+    //博联获取家庭info
+    private class BLGetFamilyIdTask extends AsyncTask<URL,Integer,BLFamilyIdListGetResult>{
+
+        @Override
+        protected BLFamilyIdListGetResult doInBackground(URL... params) {
+            BLFamilyIdListGetResult blFamilyIdListGetResult = BLLet.Family.queryLoginUserFamilyIdList();
+            return blFamilyIdListGetResult;
+        }
+
+        @Override
+        protected void onPostExecute(BLFamilyIdListGetResult blFamilyIdListGetResult) {
+            super.onPostExecute(blFamilyIdListGetResult);
+            Gson gson = new Gson();
+            L.i("博联家庭id列表："+gson.toJson(blFamilyIdListGetResult));
+            L.i("familyId:"+blFamilyIdListGetResult.getIdInfoList().get(0).getFamilyId());
+            String familyId = blFamilyIdListGetResult.getIdInfoList().get(0).getFamilyId();
+            new BLGetFamilyInfoTask(familyId).execute();
+        }
+    }
+
+    //博联获取家庭info
+    private class BLGetFamilyInfoTask extends AsyncTask<URL,Integer,BLAllFamilyInfoResult>{
+        private String familyId;
+
+        public BLGetFamilyInfoTask(String familyId){
+            this.familyId = familyId;
+        }
+
+        @Override
+        protected BLAllFamilyInfoResult doInBackground(URL... params) {
+            BLAllFamilyInfoResult blAllFamilyInfoResult = BLLet.Family.queryAllFamilyInfos(new String[]{familyId});
+            return blAllFamilyInfoResult;
+        }
+
+        @Override
+        protected void onPostExecute(BLAllFamilyInfoResult blAllFamilyInfoResult) {
+            super.onPostExecute(blAllFamilyInfoResult);
+            Gson gson1 = new Gson();
+            L.logE("模块信息："+gson1.toJson(blAllFamilyInfoResult.getAllInfos().get(0).getModuleInfos()));
+            blFamilyModuleInfo = new LinkedList<BLFamilyModuleInfo>();
+            for (int i=0;i<blAllFamilyInfoResult.getAllInfos().get(0).getModuleInfos().size();i++){
+                blFamilyModuleInfo.add(blAllFamilyInfoResult.getAllInfos().get(0).getModuleInfos().get(i));
+                L.i("博联设备名："+blAllFamilyInfoResult.getAllInfos().get(0).getModuleInfos().get(i).getName()+"  模块类型："+blAllFamilyInfoResult.getAllInfos().get(0).getModuleInfos().get(i).getModuleType());
+                L.i("模块的dev："+blAllFamilyInfoResult.getAllInfos().get(0).getModuleInfos().get(i).getModuleDevs().get(0).getContent());
+
+            }
+        }
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -1000,21 +1058,53 @@ public class MainActivity extends Activity {
                     }
                 }
 
-            }else if (sceneALL(asrStr,nameList)){
+            }else if (sceneALL(asrStr,blFamilyModuleInfo)){
                 L.i("匹配到了博联智慧星的设备");
-                for (int i=0;i<nameList.size();i++){
-                    if (scene(asrStr,nameList.get(i))){
-                        L.i("博联设备名："+nameList.get(i));
-                        String did = blAllFamilyInfoResult.getAllInfos().get(0).getModuleInfos().get(i).getModuleDevs().get(0).getDid();
+                for (int i=0;i<blFamilyModuleInfo.size();i++){
+                    if (scene(asrStr,blFamilyModuleInfo.get(i).getName())){
+                        L.i("博联设备名："+blFamilyModuleInfo.get(i).getName());
+                        String did = blFamilyModuleInfo.get(i).getModuleDevs().get(0).getDid();
                         L.i("博联设备did"+did);
                         List<DeviceBean> deviceBeanList = app.getBldnaDeviceList();
                         for (int j=0;j<deviceBeanList.size();j++){
                             if (deviceBeanList.get(j).getDid().equals(did)){
-                                if (scene(asrStr,"开")){
-                                    blControl.dnaControlSet(did,"1","pwr");
-                                }else if (scene(asrStr,"关")){
-                                    blControl.dnaControlSet(did,"0","pwr");
+                                //判断设备类型
+                                if (blFamilyModuleInfo.get(i).getModuleType()==20){      //自定义面板20
+                                    //自定义面板的dev数据
+                                    try {
+                                        JSONArray array = new JSONArray(blFamilyModuleInfo.get(i).getModuleDevs().get(0).getContent());
+                                        for (int k=0;k<array.length();k++){
+                                            JSONObject obj = (JSONObject) array.get(k);
+
+                                            JSONArray codeList = obj.getJSONArray("codeList");
+                                            JSONObject objCode = (JSONObject) codeList.get(0);
+                                            L.i("自定义面板的指令名："+obj.getString("name")+" 指令："+objCode.getString("code"));
+                                            if (scene(asrStr,obj.getString("name"))){
+                                                //找到指令，发送红外码
+                                                blControl.commandRedCodeDevice(objCode.getString("code"),did);
+
+                                            }
+
+
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }else if (blFamilyModuleInfo.get(i).getModuleType()==1){
+                                    if (scene(asrStr,"开")){
+                                        blControl.dnaControlSet(did,"1","pwr");
+                                    }else if (scene(asrStr,"关")){
+                                        blControl.dnaControlSet(did,"0","pwr");
+                                    }
+                                }else if (blFamilyModuleInfo.get(i).getModuleType()==3){
+                                    if (scene(asrStr,"开")){
+                                        blControl.dnaControlSet(did,"1","curtain_work");
+                                    }else if (scene(asrStr,"关")){
+                                        blControl.dnaControlSet(did,"0","curtain_work");
+                                    }
                                 }
+
                             }
                         }
 
@@ -1535,20 +1625,21 @@ public class MainActivity extends Activity {
         Matcher matcher = pattern.matcher(sendMsg);
         // 查找字符串中是否有匹配正则表达式的字符/字符串
         boolean rs = matcher.find();
-        L.i("是否找到该字符："+rs);
+        //L.i("是否找到该字符："+rs);
         return rs;
     }
 
     //多正则判断
-    private boolean sceneALL(String sendMsg,List<String> name){
+    private boolean sceneALL(String sendMsg,List<BLFamilyModuleInfo> info){
         boolean isFind = false;
-        for (int i=0;i<name.size();i++){
-            if (scene(sendMsg,name.get(i))){
+        for (int i=0;i<info.size();i++){
+            if (scene(sendMsg,info.get(i).getName())){
                 isFind = true;
             }
         }
         return isFind;
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
