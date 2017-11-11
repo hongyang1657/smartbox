@@ -7,7 +7,12 @@ import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
+
+import com.stericson.RootTools.RootTools;
+
+import java.io.DataOutputStream;
 
 import fitme.ai.MyApplication;
 import fitme.ai.R;
@@ -39,7 +44,7 @@ public class LaunchActivity extends Activity{
 
     private void init(){
 
-        /*thread = new Thread(){
+        thread = new Thread(){
             @Override
             public void run() {
                 super.run();
@@ -60,7 +65,7 @@ public class LaunchActivity extends Activity{
                 }
             }
         };
-        thread.start();*/
+        thread.start();
     }
 
     public void launchClick(View v){
@@ -122,8 +127,9 @@ public class LaunchActivity extends Activity{
             L.i("有网络");
             wordsToVoice = new WordsToVoice(LaunchActivity.this);
             wordsToVoice.startSynthesizer("欢迎回来，想我了吗？",null);
+
         }
-
-
     }
+
+
 }

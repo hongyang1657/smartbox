@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import fitme.ai.view.LaunchActivity;
 import fitme.ai.view.MainActivity;
 
 /**
@@ -19,7 +20,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
         String action = intent.getAction().toString();
         if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
             Log.d(TAG, "onReceive: " + action);
-            Intent startIntent = new Intent(context, MainActivity.class);
+            Intent startIntent = new Intent(context, LaunchActivity.class);
             startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(startIntent);
         }

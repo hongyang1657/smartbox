@@ -240,6 +240,11 @@ public class MainActivity extends Activity {
         vadTxv = (TextView) findViewById(R.id.vad_result);
         countTv = (TextView) findViewById(R.id.count);
 
+        //root
+        String apkRoot = "chmod 777 "+getPackageCodePath();
+
+        L.i("root_hy"+SystemManager.RootCommand(apkRoot));
+
         initUI();
         wordsToVoice = new WordsToVoice(MainActivity.this);
         app = (MyApplication) getApplication();
@@ -520,7 +525,7 @@ public class MainActivity extends Activity {
                 }
                 break;
             case R.id.bt_13:
-                long ledModel = Integer.parseInt("00111111111110110110110110110110",2);      //二进制转10进制
+                long ledModel = Integer.parseInt("00111111111110110110110110110110",2);      //二进制转10进制,第0位置设成0表示亮绿灯，第1位置设成0表示亮蓝灯，第2位置设成0表示亮红灯
                 saiAPI_wrap.set_led_lights(ledModel);
                 break;
             case R.id.bt_14:
@@ -938,6 +943,22 @@ public class MainActivity extends Activity {
                     currentPlaySongIndex--;
                 }
                 playingmusic(MusicPlayerService.NEXT_MUSIC,musicUrl.get(currentPlaySongIndex));
+            }else if (scene(asrStr,"声音")&&scene(asrStr,"大")||scene(asrStr,"音量")&&scene(asrStr,"大")){
+                //音量+
+                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_RAISE,
+                        AudioManager.FX_FOCUS_NAVIGATION_UP);
+                //当前音量
+                currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                L.i("当前音量"+currentVolume);
+                setVolumeLight(currentVolume);
+            }else if (scene(asrStr,"声音")&&scene(asrStr,"小")||scene(asrStr,"音量")&&scene(asrStr,"小")){
+                //音量-
+                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_LOWER,
+                        AudioManager.FX_FOCUS_NAVIGATION_UP);
+                //当前音量
+                currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                L.i("当前音量"+currentVolume);
+                setVolumeLight(currentVolume);
             }else if (scene(asrStr,"台灯")&&scene(asrStr,"开")){
                 Set<String> get = yeelightStripeMap.keySet();
                 for (String test:get){
@@ -1110,6 +1131,22 @@ public class MainActivity extends Activity {
 
                     }
                 }
+            }
+            else if (scene(asrStr,"回家模式")||scene(asrStr,"回家了")){
+                blControl.dnaControlSet("0000000000000000000034ea34d06857","1","curtain_work");
+
+            }
+            else if (scene(asrStr,"离家模式")||scene(asrStr,"我出门了")){
+                blControl.dnaControlSet("0000000000000000000034ea34d06857","0","curtain_work");
+
+            }
+            else if (scene(asrStr,"睡眠模式")||scene(asrStr,"我要睡觉了")){
+                blControl.dnaControlSet("0000000000000000000034ea34d06857","0","curtain_work");
+
+            }
+            else if (scene(asrStr,"起床模式")||scene(asrStr,"我要起床了")){
+                blControl.dnaControlSet("0000000000000000000034ea34d06857","1","curtain_work");
+
             }
             else {
                 messageCreat(Mac.getMac(),String.valueOf(1200020190),String.valueOf(302902090),"device_text",asrStr,"13145");
@@ -1587,7 +1624,7 @@ public class MainActivity extends Activity {
         mapDevices.put("user_group","客厅");
         devices.add(mapDevices);
 
-        map.put("user_id", "445");  //15308630310的userid:1067     13071860782userid:445
+        map.put("user_id", "1067");  //15308630310的userid:1067     13071860782userid:445
         map.put("devices", devices);
 
         Gson gson = new Gson();

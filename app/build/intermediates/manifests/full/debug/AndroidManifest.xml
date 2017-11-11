@@ -51,13 +51,13 @@
         <activity
             android:name="fitme.ai.view.MainActivity"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name="fitme.ai.view.LaunchActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name="fitme.ai.view.LaunchActivity" >
         </activity>
 
         <service android:name="fitme.ai.service.MainService" />

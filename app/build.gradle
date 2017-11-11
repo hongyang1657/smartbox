@@ -62,4 +62,5 @@ dependencies {
     compile files('src/main/jniLibs/SAI3229/Msc.jar')
     compile files('src/main/jniLibs/SAI3229/Sunflower.jar')
     compile files('src/main/jniLibs/SAI3229/AMap_Location_V2.9.0_20160906.jar')
+    compile files('src/main/jniLibs/SAI3229/RootTools.jar')
 }
