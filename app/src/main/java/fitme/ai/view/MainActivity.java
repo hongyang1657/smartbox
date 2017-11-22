@@ -45,6 +45,7 @@ import fitme.ai.model.BLControlConstants;
 import fitme.ai.model.YeelightControl;
 import fitme.ai.service.MusicPlayerService;
 import fitme.ai.setting.api.ApiManager;
+import fitme.ai.utils.AudioRecoderUtils;
 import fitme.ai.utils.JsonPraser;
 import fitme.ai.utils.L;
 import fitme.ai.utils.Mac;
@@ -199,6 +200,8 @@ public class MainActivity extends Activity {
     private volatile int wakeUpCount;
     private volatile int asrCount;
 
+    private AudioRecoderUtils audioRecoderUtils;
+
     private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
@@ -258,6 +261,21 @@ public class MainActivity extends Activity {
         //测试，博联云云对接
         broadlinkAcount();
 
+        //测试，初始化录音
+        audioRecoderUtils = new AudioRecoderUtils();
+        audioRecoderUtils.setOnAudioStatusUpdateListener(new AudioRecoderUtils.OnAudioStatusUpdateListener(){
+
+            @Override
+            public void onUpdate(double db, long time) {
+                L.i("分贝："+db+"  time:"+time);
+            }
+
+            @Override
+            public void onStop(String filePath) {
+                L.i("stop");
+            }
+        });
+
         //初始化短音效
         soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
         soundid = soundPool.load(MainActivity.this, R.raw.wake_up, 1);
@@ -277,10 +295,6 @@ public class MainActivity extends Activity {
         if (FileConfig.checkConfigFile(getApplicationContext())) {
             baseCallBack = new BaseCallBack();
             saiAPI_wrap = new saiAPI_wrap();
-
-            //
-            saiAPI_wrap.enable_wave_commun(true);
-            DirectorBaseMsg directorBaseMsg = new DirectorBaseMsg();
 
 
             int initApi = saiAPI_wrap.init_system(WAKE_UP_THRESHOLD_VALUE, "/sdcard/sai_config", baseCallBack);
@@ -440,11 +454,9 @@ public class MainActivity extends Activity {
                 break;
             case R.id.bt_2:
                 //唤醒
-                //saiAPI_wrap.set_talking_angle(1.0f);
+                saiAPI_wrap.set_talking_angle(1.0f);
                 saiAPI_wrap.set_wake_status(true);
-                //saiAPI_wrap.set_wake_status(true);
-                //测试清除缓存
-                //CleanMessageUtil.clearAllCache(getApplicationContext());
+
                 break;
             case R.id.bt_3:
                 //配置
@@ -539,17 +551,25 @@ public class MainActivity extends Activity {
                 break;
             case R.id.bt_14:
                 saiAPI_wrap.set_led_mode(0);
+                //测试结束录音
+                audioRecoderUtils.stopRecord();
                 break;
             case R.id.bt_15:
                 saiAPI_wrap.set_led_mode(1);
+                //测试开始录音
+                audioRecoderUtils.startRecord();
                 break;
             case R.id.bt_16:
-                blControl.dnaControlSet("0000000000000000000034ea34f63fdf","1","pwr");
+                //获取麦克风数据
+                saiAPI_wrap.enable_wave_commun(true);
+                DirectorBaseMsg directorBaseMsg = new DirectorBaseMsg();
+
                 break;
             default:
                 break;
         }
     }
+
 
     //开机
     private void powerOn(final int resColorId){
