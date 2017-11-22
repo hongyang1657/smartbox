@@ -734,6 +734,7 @@ int layout select_dialog_item_material 0x7f04002d
 int layout select_dialog_multichoice_material 0x7f04002e
 int layout select_dialog_singlechoice_material 0x7f04002f
 int layout support_simple_spinner_dropdown_item 0x7f040030
+int layout touch_layout 0x7f040031
 int mipmap ic_launcher 0x7f030000
 int raw ring 0x7f060000
 int raw siri 0x7f060001

@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "C:\\FitmeSound\\smartbox\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+        "outputFile": "C:\\FitmeSound\\smartbox_zhanhui\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -524,7 +524,7 @@
                     "endOffset": 2015
                 },
                 "from": {
-                    "file": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\FitmeSound\\smartbox_zhanhui\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -543,7 +543,7 @@
                     "endOffset": 2060
                 },
                 "from": {
-                    "file": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\FitmeSound\\smartbox_zhanhui\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -562,7 +562,7 @@
                     "endOffset": 2104
                 },
                 "from": {
-                    "file": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\FitmeSound\\smartbox_zhanhui\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -581,7 +581,7 @@
                     "endOffset": 2149
                 },
                 "from": {
-                    "file": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\FitmeSound\\smartbox_zhanhui\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -600,7 +600,7 @@
                     "endOffset": 2196
                 },
                 "from": {
-                    "file": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\FitmeSound\\smartbox_zhanhui\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -619,7 +619,7 @@
                     "endOffset": 2247
                 },
                 "from": {
-                    "file": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\FitmeSound\\smartbox_zhanhui\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -638,7 +638,7 @@
                     "endOffset": 2292
                 },
                 "from": {
-                    "file": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\FitmeSound\\smartbox_zhanhui\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -2842,7 +2842,7 @@
                     "endOffset": 30004
                 },
                 "from": {
-                    "file": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\values\\dimens.xml",
+                    "file": "C:\\FitmeSound\\smartbox_zhanhui\\app\\src\\main\\res\\values\\dimens.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -2861,7 +2861,7 @@
                     "endOffset": 30060
                 },
                 "from": {
-                    "file": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\values\\dimens.xml",
+                    "file": "C:\\FitmeSound\\smartbox_zhanhui\\app\\src\\main\\res\\values\\dimens.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -4210,7 +4210,7 @@
                     "endOffset": 34928
                 },
                 "from": {
-                    "file": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\values\\strings.xml",
+                    "file": "C:\\FitmeSound\\smartbox_zhanhui\\app\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 1,
                         "startColumn": 4,
@@ -4344,7 +4344,7 @@
                     "endOffset": 35723
                 },
                 "from": {
-                    "file": "C:\\FitmeSound\\smartbox\\app\\src\\main\\res\\values\\styles.xml",
+                    "file": "C:\\FitmeSound\\smartbox_zhanhui\\app\\src\\main\\res\\values\\styles.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,

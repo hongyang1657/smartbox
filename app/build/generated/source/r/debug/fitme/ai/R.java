@@ -2056,6 +2056,7 @@ containing a value of this type.
         public static final int select_dialog_multichoice_material=0x7f04002e;
         public static final int select_dialog_singlechoice_material=0x7f04002f;
         public static final int support_simple_spinner_dropdown_item=0x7f040030;
+        public static final int touch_layout=0x7f040031;
     }
     public static final class mipmap {
         public static final int ic_launcher=0x7f030000;

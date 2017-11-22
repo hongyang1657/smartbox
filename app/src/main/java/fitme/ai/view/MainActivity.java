@@ -278,6 +278,11 @@ public class MainActivity extends Activity {
             baseCallBack = new BaseCallBack();
             saiAPI_wrap = new saiAPI_wrap();
 
+            //
+            saiAPI_wrap.enable_wave_commun(true);
+            DirectorBaseMsg directorBaseMsg = new DirectorBaseMsg();
+
+
             int initApi = saiAPI_wrap.init_system(WAKE_UP_THRESHOLD_VALUE, "/sdcard/sai_config", baseCallBack);
             int start = saiAPI_wrap.start_service();
             Log.d(TAG, "onCreate: " + "initApi=" + initApi + "," + "start=" + start);
@@ -525,8 +530,12 @@ public class MainActivity extends Activity {
                 }
                 break;
             case R.id.bt_13:
-                long ledModel = Integer.parseInt("00111111111110110110110110110110",2);      //二进制转10进制,第0位置设成0表示亮绿灯，第1位置设成0表示亮蓝灯，第2位置设成0表示亮红灯
-                saiAPI_wrap.set_led_lights(ledModel);
+                /*long ledModel = Integer.parseInt("00111111111110110110110110110110",2);      //二进制转10进制,第0位置设成0表示亮绿灯，第1位置设成0表示亮蓝灯，第2位置设成0表示亮红灯
+                saiAPI_wrap.set_led_lights(ledModel);*/
+
+
+                //测试触摸板
+                startActivity(new Intent(MainActivity.this,TouchTabletTestActivity.class));
                 break;
             case R.id.bt_14:
                 saiAPI_wrap.set_led_mode(0);
@@ -884,7 +893,7 @@ public class MainActivity extends Activity {
             mHandler.sendMessageDelayed(msg, 5);
         }
 
-        //语音前后端点
+        /*//语音前后端点
         @Override
         public void outter_get_vad_status(int vad_status) {
             Log.d(TAG, "outter_get_vad_status: " + vad_status);
@@ -910,7 +919,7 @@ public class MainActivity extends Activity {
                     timeCounter.cancel();
                     break;
             }
-        }
+        }*/
 
         //获取到ASR
         @Override

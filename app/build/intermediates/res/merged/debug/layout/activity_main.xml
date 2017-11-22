@@ -251,7 +251,7 @@
 
                 <Button
                     android:id="@+id/bt_13"
-                    android:text=""
+                    android:text="测试触摸板"
                     android:onClick="click"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
