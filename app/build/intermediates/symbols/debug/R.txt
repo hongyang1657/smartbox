@@ -676,6 +676,7 @@ int id titleDividerNoCustom 0x7f0c003c
 int id title_template 0x7f0c003a
 int id top 0x7f0c0023
 int id topPanel 0x7f0c0039
+int id tv_touch 0x7f0c0096
 int id up 0x7f0c0008
 int id useLogo 0x7f0c0012
 int id vad_result 0x7f0c005c

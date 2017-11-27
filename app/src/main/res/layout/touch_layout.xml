@@ -5,6 +5,8 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tv_touch"
+        android:clickable="true"
         android:text="hello"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

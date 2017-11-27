@@ -243,10 +243,6 @@ public class MainActivity extends Activity {
         vadTxv = (TextView) findViewById(R.id.vad_result);
         countTv = (TextView) findViewById(R.id.count);
 
-        //root
-        String apkRoot = "chmod 777 "+getPackageCodePath();
-
-        L.i("root_hy"+SystemManager.RootCommand(apkRoot));
 
         initUI();
         wordsToVoice = new WordsToVoice(MainActivity.this);
@@ -298,7 +294,7 @@ public class MainActivity extends Activity {
 
 
             int initApi = saiAPI_wrap.init_system(WAKE_UP_THRESHOLD_VALUE, "/sdcard/sai_config", baseCallBack);
-            int start = saiAPI_wrap.start_service();
+            int start = saiAPI_wrap.start_service(7000);
             Log.d(TAG, "onCreate: " + "initApi=" + initApi + "," + "start=" + start);
 
             timeCounter = new TimeCounter(TIMEOUT_MILLIS, INTERVAL);
@@ -945,7 +941,7 @@ public class MainActivity extends Activity {
         @Override
         public void outter_get_asr(String asr_rslt) {
             Log.d("hy_debug_message", "outter_get_asr: asr_result = " + asr_rslt);
-
+            saiAPI_wrap.set_wake_status(false);
             String dialogId = JsonPraser.getDialogId(asr_rslt);
             /*if (!dialogId.equals(wakeUpId) || ++asrCount > 1) {
                 return;
@@ -1177,8 +1173,8 @@ public class MainActivity extends Activity {
                 blControl.dnaControlSet("0000000000000000000034ea34d06857","1","curtain_work");
 
             }
-            else {
-                messageCreat(Mac.getMac(),String.valueOf(1200020190),String.valueOf(302902090),"device_text",asrStr,"13145");
+            else {        //1200053900,302864900
+                messageCreat(Mac.getMac(),String.valueOf(1200053900),String.valueOf(302864900),"device_text",asrStr,"13145");
             }
             lastAsrStr = asrStr;
 

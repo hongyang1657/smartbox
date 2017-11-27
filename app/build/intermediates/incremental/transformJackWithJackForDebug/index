@@ -2013,8 +2013,8 @@ f:prebuilt/fitme/ai/setting/api/ApiManager.dex
 f:prebuilt/fitme/ai/setting/api/ApiService.dex
 f:prebuilt/fitme/ai/view/MainActivity$12.dex
 f:prebuilt/fitme/ai/view/MainActivity$8.dex
-f:prebuilt/fitme/ai/view/MainActivity$7$1.dex
 f:prebuilt/fitme/ai/view/LaunchActivity.dex
+f:prebuilt/fitme/ai/view/MainActivity$7$1.dex
 f:prebuilt/fitme/ai/view/-$Lambda$2.dex
 f:prebuilt/fitme/ai/view/MainActivity$4.dex
 f:prebuilt/fitme/ai/view/MainActivity$9.dex
@@ -2029,8 +2029,8 @@ f:prebuilt/fitme/ai/view/MainActivity$5.dex
 f:prebuilt/fitme/ai/view/-$Lambda$1.dex
 f:prebuilt/fitme/ai/view/SystemManager.dex
 f:prebuilt/fitme/ai/view/MainActivity$BLGetFamilyIdTask.dex
-f:prebuilt/fitme/ai/view/MainActivity$1.dex
 f:prebuilt/fitme/ai/view/MainActivity$6$1.dex
+f:prebuilt/fitme/ai/view/MainActivity$1.dex
 f:prebuilt/fitme/ai/view/LaunchActivity$1$1.dex
 f:prebuilt/fitme/ai/view/MainActivity$6.dex
 f:prebuilt/fitme/ai/view/MainActivity.dex
@@ -2045,6 +2045,7 @@ f:prebuilt/fitme/ai/view/MainActivity$7.dex
 f:prebuilt/fitme/ai/view/MainActivity$BaseCallBack.dex
 f:prebuilt/fitme/ai/view/MainActivity$BLGetFamilyInfoTask.dex
 f:prebuilt/fitme/ai/view/MainActivity$3.dex
+f:prebuilt/fitme/ai/view/TouchTabletTestActivity$1.dex
 f:prebuilt/fitme/ai/view/MainActivity$TimeCounter.dex
 f:prebuilt/fitme/ai/view/-$Lambda$3.dex
 f:prebuilt/fitme/ai/view/MainActivity$MusicReceiver.dex
@@ -2547,8 +2548,8 @@ f:prebuilt/android/support/v7/appcompat/R$drawable.dex
 f:prebuilt/android/support/v7/appcompat/R$color.dex
 f:prebuilt/android/support/v7/appcompat/R$styleable.dex
 f:prebuilt/android/support/v7/appcompat/R$id.dex
-f:prebuilt/android/support/v7/appcompat/R$attr.dex
 f:prebuilt/android/support/v7/appcompat/R$integer.dex
+f:prebuilt/android/support/v7/appcompat/R$attr.dex
 f:prebuilt/android/support/v7/appcompat/R$style.dex
 f:prebuilt/android/support/v7/appcompat/R$string.dex
 f:prebuilt/android/support/v7/appcompat/R$dimen.dex
@@ -6128,8 +6129,8 @@ f:jayce/fitme/ai/R$anim.jayce
 f:jayce/fitme/ai/FileConfig.jayce
 f:jayce/fitme/ai/R$mipmap.jayce
 f:jayce/fitme/ai/R$integer.jayce
-f:jayce/fitme/ai/R$bool.jayce
 f:jayce/fitme/ai/R$drawable.jayce
+f:jayce/fitme/ai/R$bool.jayce
 f:jayce/fitme/ai/setting/JsonFactory/JsonConverterFactory.jayce
 f:jayce/fitme/ai/setting/JsonFactory/JsonResponseBodyConverter.jayce
 f:jayce/fitme/ai/setting/JsonFactory/JsonRequestBodyConverter.jayce
@@ -6148,8 +6149,9 @@ f:jayce/fitme/ai/view/impl/IWordInputActivityView.jayce
 f:jayce/fitme/ai/view/impl/IGetYeelight.jayce
 f:jayce/fitme/ai/view/impl/IGetVoiceToWord.jayce
 f:jayce/fitme/ai/view/MainActivity$13.jayce
-f:jayce/fitme/ai/view/MainActivity$7$1.jayce
 f:jayce/fitme/ai/view/MainActivity$7.jayce
+f:jayce/fitme/ai/view/MainActivity$7$1.jayce
+f:jayce/fitme/ai/view/TouchTabletTestActivity$1.jayce
 f:jayce/fitme/ai/view/MainActivity$6$1.jayce
 f:jayce/fitme/ai/view/MainActivity$1.jayce
 f:jayce/fitme/ai/view/TouchTabletTestActivity.jayce
@@ -6656,8 +6658,8 @@ f:jayce/android/support/v7/appcompat/R$color.jayce
 f:jayce/android/support/v7/appcompat/R$dimen.jayce
 f:jayce/android/support/v7/appcompat/BuildConfig.jayce
 f:jayce/android/support/v7/appcompat/R$string.jayce
-f:jayce/android/support/v7/appcompat/R.jayce
 f:jayce/android/support/v7/appcompat/R$anim.jayce
+f:jayce/android/support/v7/appcompat/R.jayce
 f:jayce/android/support/v7/appcompat/R$integer.jayce
 f:jayce/android/support/v7/appcompat/R$bool.jayce
 f:jayce/android/support/v7/appcompat/R$drawable.jayce

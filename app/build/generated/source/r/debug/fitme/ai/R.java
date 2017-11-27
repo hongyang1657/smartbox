@@ -1994,6 +1994,7 @@ containing a value of this type.
         public static final int title_template=0x7f0c003a;
         public static final int top=0x7f0c0023;
         public static final int topPanel=0x7f0c0039;
+        public static final int tv_touch=0x7f0c0096;
         public static final int up=0x7f0c0008;
         public static final int useLogo=0x7f0c0012;
         public static final int vad_result=0x7f0c005c;
