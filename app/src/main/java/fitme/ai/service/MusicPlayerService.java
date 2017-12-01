@@ -63,7 +63,7 @@ public class MusicPlayerService extends Service{
                         L.i("当前歌曲播放完毕，下一首"+mp.isPlaying());
                         //发送广播
                         Intent intent=new Intent();
-                        intent.putExtra("next_music",true);
+                        intent.putExtra("mediaPlayerState","next");
                         intent.setAction("fitme.ai.service.MusicPlayerService");
                         sendBroadcast(intent);
                     }
@@ -71,6 +71,7 @@ public class MusicPlayerService extends Service{
 
                 }
             });
+
 
             mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
                 @Override
@@ -102,24 +103,40 @@ public class MusicPlayerService extends Service{
             case PLAT_MUSIC:
                 L.i("播放音乐！！！！！！！！！！！！！！！！！");
                 isCreatPlayer = true;
-                if (isStop){
+                /*if (isStop){
                     playMusic(songUrl);
-                }else if (!isStop&&mediaPlayer.isPlaying()&&mediaPlayer!=null){
+                }
+                else if (!isStop&&mediaPlayer.isPlaying()&&mediaPlayer!=null){
                     mediaPlayer.start();
 
-                }
+                }*/
+                playMusic(songUrl);
                 break;
             case PAUSE_MUSIC:
                 L.i("暂停播放音乐！！！！！！！！！！！！！！！！！");
                 //播放器不为空，并且正在播放
                 if (mediaPlayer!=null&&mediaPlayer.isPlaying()){
                     mediaPlayer.pause();
+                    double positionPercent;
+                    positionPercent = (double) mediaPlayer.getCurrentPosition()/(double)mediaPlayer.getDuration();
+                    Intent intent2=new Intent();
+                    intent2.putExtra("mediaPlayerState","pause");
+                    intent2.putExtra("currentPosition",positionPercent);
+                    intent2.setAction("fitme.ai.service.MusicPlayerService");
+                    sendBroadcast(intent2);
                 }
                 break;
             case RESUME_MUSIC:
                 L.i("继续播放音乐！！！！！！！！！！！！！！！！！");
                 if (mediaPlayer!=null&&!mediaPlayer.isPlaying()){
                     mediaPlayer.start();
+                    double positionPercent;
+                    positionPercent = (double) mediaPlayer.getCurrentPosition()/(double)mediaPlayer.getDuration();
+                    Intent intent3=new Intent();
+                    intent3.putExtra("mediaPlayerState","resume");
+                    intent3.putExtra("currentPosition",positionPercent);
+                    intent3.setAction("fitme.ai.service.MusicPlayerService");
+                    sendBroadcast(intent3);
                 }
                 break;
             case NEXT_MUSIC:

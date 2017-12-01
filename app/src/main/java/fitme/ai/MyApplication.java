@@ -31,6 +31,7 @@ public class MyApplication extends Application {
     private int longitude;
     //保存纬度信息
     private int latitude;
+    //
 
     @Override
     public void onCreate() {

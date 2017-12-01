@@ -2,154 +2,154 @@
 <items version="2" >
 
     <item
+        jar="C:\FitmeSound\smartbox_dev\app\src\main\jniLibs\SAI3229\libLet.jar"
+        revision="25.0.2"
+        sha1="1c4a82c94324cf5c4f16d7c17dfee2cb94279b89">
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\libLet-af81abf7623ecc51ab8944ebfb57e9a15f5c15e9.jar" />
+    </item>
+    <item
         jar="C:\Users\hongy\.android\build-cache\33c5e81b95c380a3799084c8df5d633e50588351\output\jars\classes.jar"
         revision="25.0.2"
         sha1="93c1199fcb0a34b980e6fff8350daff62e696ec2">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-5a22457415f3aacebe6acbaee5b3d278c379a26c.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-5a22457415f3aacebe6acbaee5b3d278c379a26c.jar" />
     </item>
     <item
         jar="C:\Users\hongy\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.0\support-annotations-25.3.0.jar"
         revision="25.0.2"
         sha1="dd84903d2e1af25a6081ef9038ad863cb14ca3a0">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\support-annotations-25.3.0-30776210c1020d51aae412425d87c1a71204ad23.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\support-annotations-25.3.0-30776210c1020d51aae412425d87c1a71204ad23.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.android\build-cache\9220ccb4e1313760e0c362f541aaa226b496df82\output\jars\classes.jar"
         revision="25.0.2"
         sha1="93c10d68ab5ea070f15782ae6d3a28d1f1d8f45e">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-d0d17413cc1a695c3ebd29a419ed058a8c77003d.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-d0d17413cc1a695c3ebd29a419ed058a8c77003d.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.android\build-cache\fc92daf5a102fa71ab52796d95b8948d621f4d0b\output\jars\classes.jar"
         revision="25.0.2"
         sha1="70f23cb87278f89aa51e6f57e8f0fd5266572d95">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-3a6405c583b082ec8f19e3e86f49dfb9d01a82c8.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-3a6405c583b082ec8f19e3e86f49dfb9d01a82c8.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.8.0\c4ba5371a29ac9b2ad6129b1d39ea38750043eff\gson-2.8.0.jar"
         revision="25.0.2"
         sha1="c4ba5371a29ac9b2ad6129b1d39ea38750043eff">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\gson-2.8.0-a682445f5ecc9ac55bfd22ca397ac4d95f83ba96.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\gson-2.8.0-a682445f5ecc9ac55bfd22ca397ac4d95f83ba96.jar" />
+    </item>
+    <item
+        jar="C:\FitmeSound\smartbox_dev\app\src\main\jniLibs\SAI3229\RootTools.jar"
+        revision="25.0.2"
+        sha1="16b2d49a7359c9ddbfcb1bc66f9c342c502e821b">
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\RootTools-a4030d21b7a064993527ffa114f0dc57c119e146.jar" />
+    </item>
+    <item
+        jar="C:\FitmeSound\smartbox_dev\app\src\main\jniLibs\SAI3229\Sunflower.jar"
+        revision="25.0.2"
+        sha1="4083a4f9ce52504595916209d87df4deeb9def6d">
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\Sunflower-7cb6e23920c396795b6ef3496aae9859ef94008b.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.android\build-cache\74352735ee6a318df6a898ddd4593315760f7d2c\output\jars\classes.jar"
         revision="25.0.2"
         sha1="425c7b17887e5c3f8cbdf67ba171bc246f29b42c">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-09fddc2cde3816bc64b0148c0036823514100ddf.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-09fddc2cde3816bc64b0148c0036823514100ddf.jar" />
     </item>
     <item
-        jar="C:\FitmeSound\smartbox_zhanhui\app\libs\Sai.jar"
+        jar="C:\FitmeSound\smartbox_dev\app\libs\Sai.jar"
         revision="25.0.2"
         sha1="a0cc4ac4ae3ec08220506bb6240c623308da4c7a">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\Sai-a09bcaa13aaae2eac365aa6553efbf5d300a4866.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\Sai-9e0aed2acc0717f6cd4633b37db128cff91702a6.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.android\build-cache\3e3fe58e81f908a25e85a21f0465b33b6bb2f340\output\jars\classes.jar"
         revision="25.0.2"
         sha1="518768f3200963fbfec652f498da2c9d39245234">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-37b29593f55d992745e19cba121c8e422f9f7017.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-37b29593f55d992745e19cba121c8e422f9f7017.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.gradle\caches\modules-2\files-2.1\io.reactivex\rxjava\1.3.0\af000bec2036a2a9d07197c4b03b8966bfc60b03\rxjava-1.3.0.jar"
         revision="25.0.2"
         sha1="af000bec2036a2a9d07197c4b03b8966bfc60b03">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\rxjava-1.3.0-b261b2480a4ec1119f23cf4c4df84776b620468e.jar" />
-    </item>
-    <item
-        jar="C:\FitmeSound\smartbox_zhanhui\app\src\main\jniLibs\SAI3229\libLet.jar"
-        revision="25.0.2"
-        sha1="1c4a82c94324cf5c4f16d7c17dfee2cb94279b89">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\libLet-601313fce1f7d3a1d9e6a3f036cd168a9350c034.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\rxjava-1.3.0-b261b2480a4ec1119f23cf4c4df84776b620468e.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.android\build-cache\f4436de3a77d0152c373469f14bffb11773c8774\output\jars\classes.jar"
         revision="25.0.2"
         sha1="d6a04527c17597019dad82777c5094a3d60d1c33">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-d9ea1f7c6b81e8effb0793dadd2f45c82923db87.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-d9ea1f7c6b81e8effb0793dadd2f45c82923db87.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.android\build-cache\244b181aac3bc70f820b2f3ad8e51c3a405261e9\output\jars\classes.jar"
         revision="25.0.2"
         sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-1be5a9ab278c232413b0b2c0c16f873d1ce65caf.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-1be5a9ab278c232413b0b2c0c16f873d1ce65caf.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.android\build-cache\831f5dce92919ad29ddeb495f6878093da0dd13b\output\jars\classes.jar"
         revision="25.0.2"
         sha1="5cc5ef8347a6bafa14556cbd35230aa9b3431bb0">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-2e1b0cefb7481aaffa1c2c5361aacfcbc1251805.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-2e1b0cefb7481aaffa1c2c5361aacfcbc1251805.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.android\build-cache\76df2a64a33840c10e3e8b06c1d86eca877938c6\output\jars\classes.jar"
         revision="25.0.2"
         sha1="5a2386ad9bfff580b206a7fe305cdccd00798159">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-faf110af7cc9770190f6d8711f879ebbedcbe971.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-faf110af7cc9770190f6d8711f879ebbedcbe971.jar" />
     </item>
     <item
         jar="C:\Users\hongy\AppData\Local\Android\Sdk\platforms\android-25\android.jar"
         revision="25.0.2"
         sha1="712a0312fe844a21a1b3812fa960c363a1578984">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackRuntimeLibraries\debug\jars\8000\40\android-42a53b8e901e7b0370f7faacc75223ff0c2e1751.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackRuntimeLibraries\debug\jars\8000\40\android-42a53b8e901e7b0370f7faacc75223ff0c2e1751.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.8.0\5a11f020cce2d11eb71ba916700600e18c4547e7\okhttp-3.8.0.jar"
         revision="25.0.2"
         sha1="5a11f020cce2d11eb71ba916700600e18c4547e7">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\okhttp-3.8.0-c0c62da368373b8957089712ac0558d4282ee733.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\okhttp-3.8.0-c0c62da368373b8957089712ac0558d4282ee733.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.13.0\a9283170b7305c8d92d25aff02a6ab7e45d06cbe\okio-1.13.0.jar"
         revision="25.0.2"
         sha1="a9283170b7305c8d92d25aff02a6ab7e45d06cbe">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\okio-1.13.0-fc9cfc9f4d964dd104c2b2391f2a2bb1b09b8268.jar" />
-    </item>
-    <item
-        jar="C:\FitmeSound\smartbox_zhanhui\app\src\main\jniLibs\SAI3229\RootTools.jar"
-        revision="25.0.2"
-        sha1="16b2d49a7359c9ddbfcb1bc66f9c342c502e821b">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\RootTools-2ea2ab2b29242f1c3f0eb1d1f37e8d4bc6f8a604.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\okio-1.13.0-fc9cfc9f4d964dd104c2b2391f2a2bb1b09b8268.jar" />
     </item>
     <item
         jar="C:\Users\hongy\AppData\Local\Android\Sdk\platforms\android-25\optional\org.apache.http.legacy.jar"
         revision="25.0.2"
         sha1="5f0541a4298daa0590b22cfbde43f85e2a675545">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackRuntimeLibraries\debug\jars\8000\40\org.apache.http.legacy-db406b25058eb415a31e79e4bfac071ec253952c.jar" />
-    </item>
-    <item
-        jar="C:\FitmeSound\smartbox_zhanhui\app\src\main\jniLibs\SAI3229\Msc.jar"
-        revision="25.0.2"
-        sha1="107599302660b1577c1dbe10f1e8980434413a17">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\Msc-53a6a1fc848d1db55bc16bdd02deeb474459ddb7.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackRuntimeLibraries\debug\jars\8000\40\org.apache.http.legacy-db406b25058eb415a31e79e4bfac071ec253952c.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\adapter-rxjava\2.3.0\43e4ac24adc40a24c51b2d2a71a2483ef1b0ce9a\adapter-rxjava-2.3.0.jar"
         revision="25.0.2"
         sha1="43e4ac24adc40a24c51b2d2a71a2483ef1b0ce9a">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\adapter-rxjava-2.3.0-6ca3e5c0b8e0e371b3987561240d491a4dffc114.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\adapter-rxjava-2.3.0-6ca3e5c0b8e0e371b3987561240d491a4dffc114.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\retrofit\2.3.0\bcacde6a8ccedcc56c127403d26b76072fe6214d\retrofit-2.3.0.jar"
         revision="25.0.2"
         sha1="bcacde6a8ccedcc56c127403d26b76072fe6214d">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\retrofit-2.3.0-262cd968d57f0148cd26bb5ae627ab7f2534269b.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\retrofit-2.3.0-262cd968d57f0148cd26bb5ae627ab7f2534269b.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit2\converter-gson\2.3.0\9e09011e9767bb76b5e27c9b8223476b93b14631\converter-gson-2.3.0.jar"
         revision="25.0.2"
         sha1="9e09011e9767bb76b5e27c9b8223476b93b14631">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\converter-gson-2.3.0-a274073b18cba95ffc7b130265220ce495fa7a81.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\converter-gson-2.3.0-a274073b18cba95ffc7b130265220ce495fa7a81.jar" />
     </item>
     <item
         jar="C:\Users\hongy\.android\build-cache\a9145e6e118a01f97b8bb33d64e29a7a7c19e463\output\jars\classes.jar"
         revision="25.0.2"
         sha1="4b746ef0fd46acb5aaf3d9ab9a4cec22c28d3211">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-08f312dc0e7e026ba65e76563a1c070702e69d44.jar" />
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\classes-08f312dc0e7e026ba65e76563a1c070702e69d44.jar" />
     </item>
     <item
-        jar="C:\FitmeSound\smartbox_zhanhui\app\src\main\jniLibs\SAI3229\Sunflower.jar"
+        jar="C:\FitmeSound\smartbox_dev\app\src\main\jniLibs\SAI3229\Msc.jar"
         revision="25.0.2"
-        sha1="4083a4f9ce52504595916209d87df4deeb9def6d">
-        <dex dex="C:\FitmeSound\smartbox_zhanhui\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\Sunflower-b3186b052ae4a12a2784ba09b2bdfefb2e957fb7.jar" />
+        sha1="107599302660b1577c1dbe10f1e8980434413a17">
+        <dex dex="C:\FitmeSound\smartbox_dev\app\build\intermediates\transforms\preJackPackagedLibraries\debug\jars\8000\1f\Msc-f742f2f223a3664b79bdd326c77eb0366dabf468.jar" />
     </item>
 
 </items>

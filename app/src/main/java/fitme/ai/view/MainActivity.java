@@ -46,6 +46,7 @@ import fitme.ai.model.YeelightControl;
 import fitme.ai.service.MusicPlayerService;
 import fitme.ai.setting.api.ApiManager;
 import fitme.ai.utils.AudioRecoderUtils;
+import fitme.ai.utils.CreateMessageIdUtils;
 import fitme.ai.utils.JsonPraser;
 import fitme.ai.utils.L;
 import fitme.ai.utils.Mac;
@@ -92,20 +93,18 @@ public class MainActivity extends Activity {
     private static final int TIMER = 1;   //跑马灯计时器
     private static final int CLEAR_ALL = 2;  //熄灭所有灯
     private int timer = 0;
-    private Handler handler = new Handler(){
+    private Handler asrHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
                 case TIMER:
-                    lightUp(timer);
                     Log.i("result", "handleMessage: "+timer);
                     if (timer==12){
                         timer = 0;
                     }
                     break;
                 case CLEAR_ALL:
-                    clearAllLightToColor(R.drawable.cycler_shape_gray);
                     break;
                 default:
                     break;
@@ -217,8 +216,7 @@ public class MainActivity extends Activity {
                     float angle = (float) message.obj;
                     int a = (int) angle;
                     L.i("唤醒角度："+angle);
-                    wakeUpByAngle(a);
-                    handler.sendEmptyMessageDelayed(CLEAR_ALL,3000);
+                    asrHandler.sendEmptyMessageDelayed(CLEAR_ALL,3000);
                     //播放唤醒声
                     soundPool.play(soundid, 1.0f, 1.0f, 0, 0, 1.0f);
                     //mWkpCountTxv.setText(message.arg1 + "");
@@ -232,6 +230,42 @@ public class MainActivity extends Activity {
             return false;
         }
     });
+
+    //当前进行到的网络请求消息的次数,每次发送消息重置
+    private int nowTime;
+    //定时循环执行任务
+    private Handler handler = new Handler();
+    //定时处理runnable
+    private Runnable task = new Runnable() {
+        @Override
+        public void run() {
+//            if (nowTime < LOOP_TIMES) {
+//                mMessageGetPresenter.messageGet(localUser, 5);
+//                nowTime += 1;
+//                handler.postDelayed(this, 500);
+//            }
+            L.i("task______________________________nowTime:"+nowTime);
+            if (nowTime <= 10) {
+                getMessage();
+                nowTime += 1;
+                handler.postDelayed(this, 300);
+            } else if (nowTime > 10 && nowTime <= 17) {
+                getMessage();
+                nowTime += 1;
+                handler.postDelayed(this, 1000);
+            } else if (nowTime > 17 && nowTime <= 50) {
+                getMessage();
+                nowTime += 1;
+                handler.postDelayed(this, 3000);
+            }
+            else{
+                getMessage();
+                nowTime += 1;
+                handler.postDelayed(this, 10000);
+            }
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,7 +286,6 @@ public class MainActivity extends Activity {
         yeelightStripeMap = new HashMap<String, YeelightStripeIpAndPortBean>();
         YeelightControl.getInstance(app,iGetYeelight).searchDevice();    //初始化Yeelight
         //绑定设备
-        bindDevice();
 
         //测试，博联云云对接
         broadlinkAcount();
@@ -294,7 +327,7 @@ public class MainActivity extends Activity {
 
 
             int initApi = saiAPI_wrap.init_system(WAKE_UP_THRESHOLD_VALUE, "/sdcard/sai_config", baseCallBack);
-            int start = saiAPI_wrap.start_service(7000);
+            int start = saiAPI_wrap.start_service();
             Log.d(TAG, "onCreate: " + "initApi=" + initApi + "," + "start=" + start);
 
             timeCounter = new TimeCounter(TIMEOUT_MILLIS, INTERVAL);
@@ -426,14 +459,7 @@ public class MainActivity extends Activity {
         ivLightList.add(ivLight11);
         ivLightList.add(ivLight12);
 
-        bt1 = (Button) findViewById(R.id.bt_1);
-        bt2 = (Button) findViewById(R.id.bt_2);
-        bt3 = (Button) findViewById(R.id.bt_3);
-        bt4 = (Button) findViewById(R.id.bt_4);
-        bt5 = (Button) findViewById(R.id.bt_5);
-        bt6 = (Button) findViewById(R.id.bt_6);
-        bt7 = (Button) findViewById(R.id.bt_7);
-        bt8 = (Button) findViewById(R.id.bt_8);
+
     }
 
     /**
@@ -479,11 +505,9 @@ public class MainActivity extends Activity {
                 break;
             case R.id.bt_5:
                 //休眠
-                TTSLight();
                 break;
             case R.id.bt_6:
                 //加载
-                loadingLight(R.drawable.cycler_shape_white);
                 break;
             case R.id.bt_7:
                 //音量+
@@ -492,7 +516,6 @@ public class MainActivity extends Activity {
                 //当前音量
                 currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                 L.i("当前音量"+currentVolume);
-                setVolumeLight(currentVolume);
                 break;
             case R.id.bt_8:
                 //音量-
@@ -501,7 +524,6 @@ public class MainActivity extends Activity {
                 //当前音量
                 currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                 L.i("当前音量"+currentVolume);
-                setVolumeLight(currentVolume);
                 break;
             case R.id.bt_9:
                 //结束唤醒
@@ -559,7 +581,25 @@ public class MainActivity extends Activity {
                 //获取麦克风数据
                 saiAPI_wrap.enable_wave_commun(true);
                 DirectorBaseMsg directorBaseMsg = new DirectorBaseMsg();
+                break;
+            case R.id.bt_17:
+                //测试播放音频
+                playingmusic(MusicPlayerService.PLAT_MUSIC,"http://od.open.qingting.fm/vod/00/00/0000000000000000000024144869_24.m4a?u=865&channelId=76206&programId=1318474");  //测试播放一个音频
+                break;
+            case R.id.bt_18:
+                //暂停播放
+                playingmusic(MusicPlayerService.PAUSE_MUSIC,"");
 
+                break;
+            case R.id.bt_19:
+                //继续播放
+                mediaContinue(5);
+                playingmusic(MusicPlayerService.RESUME_MUSIC,"");
+                break;
+            case R.id.bt_20:
+                //下一曲
+                mediaNext(url);
+                //playingmusic(MusicPlayerService.NEXT_MUSIC,"http://od.open.qingting.fm/vod/00/00/0000000000000000000024144869_24.m4a?u=865&channelId=76206&programId=1318474");
                 break;
             default:
                 break;
@@ -628,245 +668,6 @@ public class MainActivity extends Activity {
         }
     }
 
-    //根据唤醒的角度亮灯
-    private void wakeUpByAngle(int angle){
-        if (angle>=0&&angle<30){
-            ivLight1.setImageResource(R.drawable.cycler_shape_green);
-            ivLight2.setImageResource(R.drawable.cycler_shape_green);
-        }else if (angle>=30&&angle<60){
-            ivLight2.setImageResource(R.drawable.cycler_shape_green);
-            ivLight3.setImageResource(R.drawable.cycler_shape_green);
-        }else if (angle>=60&&angle<90){
-            ivLight3.setImageResource(R.drawable.cycler_shape_green);
-            ivLight4.setImageResource(R.drawable.cycler_shape_green);
-        }else if (angle>=90&&angle<120){
-            ivLight4.setImageResource(R.drawable.cycler_shape_green);
-            ivLight5.setImageResource(R.drawable.cycler_shape_green);
-        }else if (angle>=120&&angle<150){
-            ivLight5.setImageResource(R.drawable.cycler_shape_green);
-            ivLight6.setImageResource(R.drawable.cycler_shape_green);
-        }else if (angle>=150&&angle<180){
-            ivLight6.setImageResource(R.drawable.cycler_shape_green);
-            ivLight7.setImageResource(R.drawable.cycler_shape_green);
-        }else if (angle>=180&&angle<210){
-            ivLight7.setImageResource(R.drawable.cycler_shape_green);
-            ivLight8.setImageResource(R.drawable.cycler_shape_green);
-        }else if (angle>=210&&angle<240){
-            ivLight8.setImageResource(R.drawable.cycler_shape_green);
-            ivLight9.setImageResource(R.drawable.cycler_shape_green);
-        }else if (angle>=240&&angle<270){
-            ivLight9.setImageResource(R.drawable.cycler_shape_green);
-            ivLight10.setImageResource(R.drawable.cycler_shape_green);
-        }else if (angle>=270&&angle<300){
-            ivLight10.setImageResource(R.drawable.cycler_shape_green);
-            ivLight11.setImageResource(R.drawable.cycler_shape_green);
-        }else if (angle>=300&&angle<330){
-            ivLight11.setImageResource(R.drawable.cycler_shape_green);
-            ivLight12.setImageResource(R.drawable.cycler_shape_green);
-        }else if (angle>=330&&angle<=360){
-            ivLight12.setImageResource(R.drawable.cycler_shape_green);
-            ivLight1.setImageResource(R.drawable.cycler_shape_green);
-        }
-    }
-
-    //所有灯变成一个颜色
-    private void clearAllLightToColor(int resColorId){
-        for (int i=0;i<ivLightList.size();i++){
-            ivLightList.get(i).setImageResource(resColorId);
-        }
-    }
-
-    //点亮某一灯
-    private void lightUp(int index){
-        for (int i=0;i<ivLightList.size();i++){
-            if (index==i+1){
-                ivLightList.get(i).setImageResource(R.drawable.cycler_shape_white);
-            }else{
-                ivLightList.get(i).setImageResource(R.drawable.cycler_shape_blue);
-            }
-
-        }
-    }
-
-    //加载灯
-    private void loadingLight(final int resColorId){
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                for (int i=0;i<ivLightList.size();i++){
-                    try {
-                        final int finalI = i;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (int i=0;i<ivLightList.size();i++){
-                                    ivLightList.get(finalI).setImageResource(R.drawable.cycler_shape_blue);
-                                }
-                                ivLightList.get(finalI).setAlpha(1f);
-                                ivLightList.get(finalI).setImageResource(resColorId);
-                            }
-                        });
-                        sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
-    }
-
-    //说话时候的灯光效果
-    private void TTSLight(){
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                try {
-                    L.i("dooooooooooooooooooooooooo1");
-                    sleep(3000);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            L.i("dooooooooooooooooooooooooo2");
-                        }
-                    });
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-
-    }
-
-    //音量灯
-    private Thread time;
-    private void setVolumeLight(int currentVolume){
-        L.i("dddddd"+currentVolume);
-
-        if (time!=null&&time.isAlive()){
-            time.interrupt();
-        }
-        time = new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                try {
-                    sleep(3000);
-                    handler.sendEmptyMessage(CLEAR_ALL);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        time.start();
-
-        //根据当前音量设置灯光
-        if (currentVolume==0||currentVolume==1){
-
-        }else if (currentVolume==2||currentVolume==3){
-            ivLight7.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight8.setImageResource(R.drawable.cycler_shape_blue);
-
-            ivLight1.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight2.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight3.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight4.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight5.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight6.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight9.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight10.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight11.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight12.setImageResource(R.drawable.cycler_shape_gray);
-
-        }else if (currentVolume==4||currentVolume==5){
-            ivLight7.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight8.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight6.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight9.setImageResource(R.drawable.cycler_shape_blue);
-
-            ivLight1.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight2.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight3.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight4.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight5.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight10.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight11.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight12.setImageResource(R.drawable.cycler_shape_gray);
-        }else if (currentVolume==6||currentVolume==7){
-            ivLight7.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight8.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight6.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight9.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight5.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight10.setImageResource(R.drawable.cycler_shape_blue);
-
-            ivLight1.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight2.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight3.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight4.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight11.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight12.setImageResource(R.drawable.cycler_shape_gray);
-
-        }else if (currentVolume==8||currentVolume==9){
-            ivLight7.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight8.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight6.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight9.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight5.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight10.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight4.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight11.setImageResource(R.drawable.cycler_shape_blue);
-
-            ivLight1.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight2.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight3.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight12.setImageResource(R.drawable.cycler_shape_gray);
-
-        }else if (currentVolume==10||currentVolume==11){
-            ivLight7.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight8.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight6.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight9.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight5.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight10.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight4.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight11.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight3.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight12.setImageResource(R.drawable.cycler_shape_blue);
-
-            ivLight1.setImageResource(R.drawable.cycler_shape_gray);
-            ivLight2.setImageResource(R.drawable.cycler_shape_gray);
-
-        }else if (currentVolume==12||currentVolume==13){
-            ivLight7.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight8.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight6.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight9.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight5.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight10.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight4.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight11.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight3.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight12.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight2.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight1.setImageResource(R.drawable.cycler_shape_blue);
-        }else if (currentVolume==14||currentVolume==15){
-            ivLight7.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight8.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight6.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight9.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight5.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight10.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight4.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight11.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight3.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight12.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight2.setImageResource(R.drawable.cycler_shape_blue);
-            ivLight1.setImageResource(R.drawable.cycler_shape_blue);
-        }
-    }
 
     private void showUnWakeUp(String reason) {
         runOnUiThread(() -> vadTxv.setText(reason + "进入未唤醒状态"));
@@ -953,229 +754,8 @@ public class MainActivity extends Activity {
             }
 
             String asrStr = JsonPraser.getAsrStr(asr_rslt);
+            messageCreat(asrStr);    //发送消息
 
-            if (scene(asrStr,"下一首")||scene(asrStr,"换一首")){
-                if (currentPlaySongIndex==(musicListSize-1)){
-                    currentPlaySongIndex = 0;
-                }else {
-                    currentPlaySongIndex++;
-                }
-                playingmusic(MusicPlayerService.NEXT_MUSIC,musicUrl.get(currentPlaySongIndex));
-            }else if (scene(asrStr,"上一首")){
-                if (currentPlaySongIndex==0){
-                    currentPlaySongIndex = musicListSize-1;
-                }else {
-                    currentPlaySongIndex--;
-                }
-                playingmusic(MusicPlayerService.NEXT_MUSIC,musicUrl.get(currentPlaySongIndex));
-            }else if (scene(asrStr,"声音")&&scene(asrStr,"大")||scene(asrStr,"音量")&&scene(asrStr,"大")){
-                //音量+
-                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_RAISE,
-                        AudioManager.FX_FOCUS_NAVIGATION_UP);
-                //当前音量
-                currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                L.i("当前音量"+currentVolume);
-                setVolumeLight(currentVolume);
-            }else if (scene(asrStr,"声音")&&scene(asrStr,"小")||scene(asrStr,"音量")&&scene(asrStr,"小")){
-                //音量-
-                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_LOWER,
-                        AudioManager.FX_FOCUS_NAVIGATION_UP);
-                //当前音量
-                currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                L.i("当前音量"+currentVolume);
-                setVolumeLight(currentVolume);
-            }else if (scene(asrStr,"台灯")&&scene(asrStr,"开")){
-                Set<String> get = yeelightStripeMap.keySet();
-                for (String test:get){
-                    YeelightStripeIpAndPortBean yeelightStripeIpAndPortBean = yeelightStripeMap.get(test);
-                    String model = yeelightStripeIpAndPortBean.getModel();
-                    L.i("model"+model);
-                    String ip = yeelightStripeIpAndPortBean.getIp();
-                    String port = yeelightStripeIpAndPortBean.getPort();
-                    if ("desklamp".equals(model)){
-                        YeelightControl.getInstance(app, iGetYeelight).connectAndControl(ip,Integer.parseInt(port),true,-1,-1,-1); //全开
-                    }
-                }
-            }else if (scene(asrStr,"台灯")&&scene(asrStr,"关")){
-                Set<String> get = yeelightStripeMap.keySet();
-                for (String test:get){
-                    YeelightStripeIpAndPortBean yeelightStripeIpAndPortBean = yeelightStripeMap.get(test);
-                    String model = yeelightStripeIpAndPortBean.getModel();
-                    String ip = yeelightStripeIpAndPortBean.getIp();
-                    String port = yeelightStripeIpAndPortBean.getPort();
-                    if ("desklamp".equals(model)){
-                        YeelightControl.getInstance(app,iGetYeelight).connectAndControl(ip,Integer.parseInt(port),false,-1,-1,-1);
-                    }
-                }
-
-            }else if (scene(asrStr,"台灯")&&scene(asrStr,"亮")){
-                Set<String> get = yeelightStripeMap.keySet();
-                for (String test:get){
-                    YeelightStripeIpAndPortBean yeelightStripeIpAndPortBean = yeelightStripeMap.get(test);
-                    String model = yeelightStripeIpAndPortBean.getModel();
-                    String ip = yeelightStripeIpAndPortBean.getIp();
-                    String port = yeelightStripeIpAndPortBean.getPort();
-                    if ("desklamp".equals(model)){
-                        YeelightControl.getInstance(app,iGetYeelight).connectAndControl(ip,Integer.parseInt(port),false,-1,-1,-1);
-                    }
-                }
-
-            }else if (scene(asrStr,"灯带")&&scene(asrStr,"开")){
-                Set<String> get = yeelightStripeMap.keySet();
-                for (String test:get){
-                    YeelightStripeIpAndPortBean yeelightStripeIpAndPortBean = yeelightStripeMap.get(test);
-                    String model = yeelightStripeIpAndPortBean.getModel();
-                    String ip = yeelightStripeIpAndPortBean.getIp();
-                    String port = yeelightStripeIpAndPortBean.getPort();
-                    if ("stripe".equals(model)){
-                        YeelightControl.getInstance(app,iGetYeelight).connectAndControl(ip,Integer.parseInt(port),true,-1,-1,-1);
-                    }
-                }
-
-            }else if (scene(asrStr,"灯带")&&scene(asrStr,"关")){
-                Set<String> get = yeelightStripeMap.keySet();
-                for (String test:get){
-                    YeelightStripeIpAndPortBean yeelightStripeIpAndPortBean = yeelightStripeMap.get(test);
-                    String model = yeelightStripeIpAndPortBean.getModel();
-                    String ip = yeelightStripeIpAndPortBean.getIp();
-                    String port = yeelightStripeIpAndPortBean.getPort();
-                    if ("stripe".equals(model)){
-                        YeelightControl.getInstance(app,iGetYeelight).connectAndControl(ip,Integer.parseInt(port),false,-1,-1,-1);
-                    }
-                }
-
-            }else if (scene(asrStr,"灯带")&&scene(asrStr,"红")){
-                Set<String> get = yeelightStripeMap.keySet();
-                for (String test:get){
-                    YeelightStripeIpAndPortBean yeelightStripeIpAndPortBean = yeelightStripeMap.get(test);
-                    String model = yeelightStripeIpAndPortBean.getModel();
-                    String ip = yeelightStripeIpAndPortBean.getIp();
-                    String port = yeelightStripeIpAndPortBean.getPort();
-                    if ("stripe".equals(model)){
-                        YeelightControl.getInstance(app, iGetYeelight).connectAndControl(ip, Integer.parseInt(port), false, -1, 0, -1);
-                    }
-                }
-
-            }else if (scene(asrStr,"灯带")&&scene(asrStr,"绿")){
-                Set<String> get = yeelightStripeMap.keySet();
-                for (String test:get){
-                    YeelightStripeIpAndPortBean yeelightStripeIpAndPortBean = yeelightStripeMap.get(test);
-                    String model = yeelightStripeIpAndPortBean.getModel();
-                    String ip = yeelightStripeIpAndPortBean.getIp();
-                    String port = yeelightStripeIpAndPortBean.getPort();
-                    if ("stripe".equals(model)){
-                        YeelightControl.getInstance(app, iGetYeelight).connectAndControl(ip, Integer.parseInt(port), false, -1, 110, -1);
-                    }
-                }
-
-            }else if (scene(asrStr,"灯带")&&scene(asrStr,"蓝")){
-                Set<String> get = yeelightStripeMap.keySet();
-                for (String test:get){
-                    YeelightStripeIpAndPortBean yeelightStripeIpAndPortBean = yeelightStripeMap.get(test);
-                    String model = yeelightStripeIpAndPortBean.getModel();
-                    String ip = yeelightStripeIpAndPortBean.getIp();
-                    String port = yeelightStripeIpAndPortBean.getPort();
-                    if ("stripe".equals(model)){
-                        YeelightControl.getInstance(app, iGetYeelight).connectAndControl(ip, Integer.parseInt(port), false, -1, 230, -1);
-                    }
-                }
-
-            }else if (scene(asrStr,"灯带")&&scene(asrStr,"黄")){
-                Set<String> get = yeelightStripeMap.keySet();
-                for (String test:get){
-                    YeelightStripeIpAndPortBean yeelightStripeIpAndPortBean = yeelightStripeMap.get(test);
-                    String model = yeelightStripeIpAndPortBean.getModel();
-                    String ip = yeelightStripeIpAndPortBean.getIp();
-                    String port = yeelightStripeIpAndPortBean.getPort();
-                    if ("stripe".equals(model)){
-                        YeelightControl.getInstance(app, iGetYeelight).connectAndControl(ip, Integer.parseInt(port), false, -1, 45, -1);
-                    }
-                }
-
-            }else if (scene(asrStr,"灯带")&&scene(asrStr,"粉")){
-                Set<String> get = yeelightStripeMap.keySet();
-                for (String test:get){
-                    YeelightStripeIpAndPortBean yeelightStripeIpAndPortBean = yeelightStripeMap.get(test);
-                    String model = yeelightStripeIpAndPortBean.getModel();
-                    String ip = yeelightStripeIpAndPortBean.getIp();
-                    String port = yeelightStripeIpAndPortBean.getPort();
-                    if ("stripe".equals(model)){
-                        YeelightControl.getInstance(app, iGetYeelight).connectAndControl(ip, Integer.parseInt(port), false, -1, 320, -1);
-                    }
-                }
-
-            }else if (sceneALL(asrStr,blFamilyModuleInfo)){
-                L.i("匹配到了博联智慧星的设备");
-                for (int i=0;i<blFamilyModuleInfo.size();i++){
-                    if (scene(asrStr,blFamilyModuleInfo.get(i).getName())){
-                        L.i("博联设备名："+blFamilyModuleInfo.get(i).getName());
-                        String did = blFamilyModuleInfo.get(i).getModuleDevs().get(0).getDid();
-                        L.i("博联设备did"+did);
-                        List<DeviceBean> deviceBeanList = app.getBldnaDeviceList();
-                        for (int j=0;j<deviceBeanList.size();j++){
-                            if (deviceBeanList.get(j).getDid().equals(did)){
-                                //判断设备类型
-                                if (blFamilyModuleInfo.get(i).getModuleType()==20){      //自定义面板20
-                                    //自定义面板的dev数据
-                                    try {
-                                        JSONArray array = new JSONArray(blFamilyModuleInfo.get(i).getModuleDevs().get(0).getContent());
-                                        for (int k=0;k<array.length();k++){
-                                            JSONObject obj = (JSONObject) array.get(k);
-
-                                            JSONArray codeList = obj.getJSONArray("codeList");
-                                            JSONObject objCode = (JSONObject) codeList.get(0);
-                                            L.i("自定义面板的指令名："+obj.getString("name")+" 指令："+objCode.getString("code"));
-                                            if (scene(asrStr,obj.getString("name"))){
-                                                //找到指令，发送红外码
-                                                blControl.commandRedCodeDevice(objCode.getString("code"),did);
-
-                                            }
-
-
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }else if (blFamilyModuleInfo.get(i).getModuleType()==1){
-                                    if (scene(asrStr,"开")){
-                                        blControl.dnaControlSet(did,"1","pwr");
-                                    }else if (scene(asrStr,"关")){
-                                        blControl.dnaControlSet(did,"0","pwr");
-                                    }
-                                }else if (blFamilyModuleInfo.get(i).getModuleType()==3){
-                                    if (scene(asrStr,"开")){
-                                        blControl.dnaControlSet(did,"1","curtain_work");
-                                    }else if (scene(asrStr,"关")){
-                                        blControl.dnaControlSet(did,"0","curtain_work");
-                                    }
-                                }
-
-                            }
-                        }
-
-                    }
-                }
-            }
-            else if (scene(asrStr,"回家模式")||scene(asrStr,"回家了")){
-                blControl.dnaControlSet("0000000000000000000034ea34d06857","1","curtain_work");
-
-            }
-            else if (scene(asrStr,"离家模式")||scene(asrStr,"我出门了")){
-                blControl.dnaControlSet("0000000000000000000034ea34d06857","0","curtain_work");
-
-            }
-            else if (scene(asrStr,"睡眠模式")||scene(asrStr,"我要睡觉了")){
-                blControl.dnaControlSet("0000000000000000000034ea34d06857","0","curtain_work");
-
-            }
-            else if (scene(asrStr,"起床模式")||scene(asrStr,"我要起床了")){
-                blControl.dnaControlSet("0000000000000000000034ea34d06857","1","curtain_work");
-
-            }
-            else {        //1200053900,302864900
-                messageCreat(Mac.getMac(),String.valueOf(1200053900),String.valueOf(302864900),"device_text",asrStr,"13145");
-            }
             lastAsrStr = asrStr;
 
             showAsr(asrStr);
@@ -1225,7 +805,7 @@ public class MainActivity extends Activity {
         public void onSpeakBegin() {
             //showTip("开始播放");
             L.i("语音合成回调监听-----------"+"开始播放");
-            playingmusic(MusicPlayerService.REDUCE_MUSIC_VOLUME,"");
+            playingmusic(MusicPlayerService.REDUCE_MUSIC_VOLUME,"");     //减小音乐音量
         }
 
         @Override
@@ -1274,122 +854,6 @@ public class MainActivity extends Activity {
     };
 
     //发送客户消息请求
-    private void messageCreat(String userId, String x, String y, final String messageType, String content, String password){
-        String timeStamp = SignAndEncrypt.getTimeStamp();
-
-        Gson gson = new Gson();
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("user_id", userId);
-        params.put("x", x);
-        params.put("y", y);
-        params.put("message_type", messageType);
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("content", content);
-        params.put("message_body", map);
-        params.put("password",password);
-        L.i("---------发出的json-"+gson.toJson(params));
-
-        LinkedHashMap<String, Object> par = new LinkedHashMap<>();
-        par.put("method", "message/from_customer/create");
-        par.put("api_key", ApiManager.api_key);
-        par.put("timestamp", timeStamp);
-        par.put("http_body", gson.toJson(params));
-        String sign = SignAndEncrypt.signRequest(par, ApiManager.api_secret);
-        ApiManager.fitmeApiService.messageCreateVB(ApiManager.api_key, timeStamp, sign,params)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MessageGet>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        L.i("错误信息："+e.toString());
-                        wordsToVoice.startSynthesizer("小秘正在开小差",mTtsListener);
-
-                    }
-                    @Override
-                    public void onNext(MessageGet messageGet) {
-                        /*try {
-                            L.logE("json:"+messageGet.string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }*/
-
-                        L.logE("收到回复的消息:"+new Gson().toJson(messageGet));
-                        fitme_result.setText(new Gson().toJson(messageGet));
-                        //成功收到回复的消息
-                        if (null!=messageGet.getStatus()&&"success".equals(messageGet.getStatus())){
-                            L.logE("成功收到回复的消息");
-                            if ("text".equals(messageGet.getMessages()[0].getMessage_type())){        //单句回复
-                                L.logE("单句回复");
-                                wordsToVoice.startSynthesizer(messageGet.getMessages()[0].getMessage_body().getContent(),mTtsListener);
-                            } else if ("multiline_text".equals(messageGet.getMessages()[0].getMessage_type())){         //多句回复
-                                L.logE("多句回复");
-                                doMultilineText(messageGet.getMessages()[0].getMessage_body().getContents());
-                            }else if ("task_result".equals(messageGet.getMessages()[0].getMessage_type())){        //控制命令或音乐
-                                L.logE("控制命令或音乐");
-
-                                if ("query_music".equals(messageGet.getMessages()[0].getMessage_body().getTask_type())){     //查询音乐
-                                    L.logE("查询音乐");
-                                    String speechText = messageGet.getMessages()[0].getMessage_body().getTask_result_speech_text();
-                                    int musicsNum = messageGet.getMessages()[0].getMessage_body().getTask_result_body().getMusics().size();
-                                    musicList = new LinkedList<Music>();
-                                    for (int i=0;i<musicsNum;i++){
-                                        musicList.add(messageGet.getMessages()[0].getMessage_body().getTask_result_body().getMusics().get(i));
-                                    }
-                                    //初始化歌单
-                                    initMusicList(musicList);
-                                    playingmusic(MusicPlayerService.NEXT_MUSIC,musicUrl.get(currentPlaySongIndex));
-                                    isPlayingMusic = true;
-                                }else if ("command".equals(messageGet.getMessages()[0].getMessage_body().getTask_type())){
-                                    //控制
-                                    L.logE("控制");
-                                    playingmusic(MusicPlayerService.RECOVER_MUSIC_VOLUME,"");   //恢复音乐音量
-
-                                    int devicesLength = messageGet.getMessages()[0].getMessage_body().getTask_result_body().getDevices().size();
-                                    for (int i=0;i<devicesLength;i++){
-                                        String deviceType = messageGet.getMessages()[0].getMessage_body().getTask_result_body().getDevices().get(i).getDevice_type();
-                                        if ("20045".equals(deviceType)){  //杜亚窗帘
-                                            L.logE("杜亚窗帘");
-                                            //blControl.dnaControlSet("curtain",messageGet.getMessages()[0].getMessage_body().getTask_result_body().getDevices().get(i).getCommand_code(),"curtain_work");
-                                            //blControl.curtainControl(Integer.parseInt(messageGet.getMessages()[0].getMessage_body().getTask_result_body().getCommand_code()));
-                                        }else if ("10026".equals(deviceType) || "10039".equals(deviceType)){     //RM红外遥控
-                                            L.logE("RM红外遥控");
-                                            blControl.commandRedCodeDevice(messageGet.getMessages()[0].getMessage_body().getTask_result_body().getDevices().get(i).getCommand_code(),
-                                                    messageGet.getMessages()[0].getMessage_body().getTask_result_body().getDevices().get(i).getDid());
-                                        }else if ("30014".equals(deviceType)){     //SP系列wifi开关
-                                            //blControl.dnaControlSet("sp","1","val");
-                                        }else if ("20149".equals(deviceType)){        //四位排插
-
-                                        }
-                                    }
-
-                                }else if ("music_command".equals(messageGet.getMessages()[0].getMessage_body().getTask_type())){
-                                    commandMusicPlayer(messageGet.getMessages()[0].getMessage_body().getTask_result_body().getCommand());
-                                }else if ("tv_command".equals(messageGet.getMessages()[0].getMessage_body().getTask_type())){
-                                    //控制电视播放
-                                    wordsToVoice.startSynthesizer("正在电视设备上为您播放："+messageGet.getMessages()[0].getMessage_body().getTask_result_body().getFilm_name(),mTtsListener);
-                                }else if ("box_command".equals(messageGet.getMessages()[0].getMessage_body().getTask_type())){
-                                    if ("next_page".equals(messageGet.getMessages()[0].getMessage_body().getTask_result_body().getCommand())){
-                                        //下一页
-                                        L.i("电视盒子下一页");
-                                        blControl.commandRedCodeDevice(BLControlConstants.TV_BOX_NEXT_PAGE, BLControlConstants.RM_MINI_DID);
-                                    }else if ("prev_page".equals(messageGet.getMessages()[0].getMessage_body().getTask_result_body().getCommand())){
-                                        //上一页
-                                        L.i("电视盒子上一页");
-                                        blControl.commandRedCodeDevice(BLControlConstants.TV_BOX_PRE_PAGE, BLControlConstants.RM_MINI_DID);
-                                    }
-                                }
-                            }
-                        }
-
-
-                    }
-                });
-    }
 
     /**
      * 获取音乐广播数据
@@ -1397,25 +861,33 @@ public class MainActivity extends Activity {
     public class MusicReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
-            L.i("音乐广播数据:"+intent.getBooleanExtra("next_music",false));
-            if (currentPlaySongIndex==(musicListSize-1)){
-                currentPlaySongIndex = 0;
-            }else {
-                currentPlaySongIndex++;
+            String mediaPlayerState = intent.getStringExtra("mediaPlayerState");
+            L.i("媒体播放器状态:"+mediaPlayerState);
+            switch (mediaPlayerState){
+                case "pause":
+                    double position = intent.getDoubleExtra("currentPosition",0);
+                    int i = (int) (position*100);
+                    L.i("当前播放位置："+position+"位置:"+i);
+                    //暂停时同步播放的位置
+                    mediaPause(i);
+                    break;
+                case "next":
+                    L.i("next");
+                    mediaNext("url");
+                    break;
+                case "resume":
+                    L.i("resume");
+                    double position1 = intent.getDoubleExtra("currentPosition",0);
+                    int i1 = (int) (position1*100);
+                    L.i("当前播放位置："+position1+"位置:"+i1);
+                    mediaContinue(i1);
+                    break;
             }
-            playingmusic(MusicPlayerService.NEXT_MUSIC,musicUrl.get(currentPlaySongIndex));
         }
     }
 
     //发送指令到音乐播放的service
-    private List<Music> musicList;
-    private boolean isPlayingMusic;
     private void playingmusic(int type,String songUrl) {
-        //判断是否放新一曲
-        if (type== MusicPlayerService.PLAT_MUSIC||type== MusicPlayerService.NEXT_MUSIC){
-            String strMusicInfo = musicList.get(currentPlaySongIndex).getSinger()+","+musicList.get(currentPlaySongIndex).getName();
-            wordsToVoice.startSynthesizer("正在为您播放："+strMusicInfo,mTtsListener);
-        }
         //启动服务，播放音乐
         Intent intent = new Intent(this,MusicPlayerService.class);
         intent.putExtra("type",type);
@@ -1423,240 +895,37 @@ public class MainActivity extends Activity {
         startService(intent);
     }
 
-    //初始化音乐列表
-    private List<String> musicUrl = null;
-    private int musicListSize = 0;
-    private int currentPlaySongIndex = 0;
-    private void initMusicList(List<Music> musicList){
-        musicUrl = new LinkedList<>();
-        musicListSize = musicList.size();
-        currentPlaySongIndex = 0;     //当前播放的歌曲在歌单中的位置
-        for (int i=0;i<musicListSize;i++){
-            musicUrl.add(musicList.get(i).getSong_url());
-            L.i("歌曲URL："+musicUrl.get(i));
-        }
-    }
 
-    //处理多个回复
-    private void doMultilineText(String[] multiline_text){
-        wordsToVoice.startSynthesizer(multiline_text[0],mTtsListener);
-        //后续还要处理
-    }
+    private String userId = "36";
+    private String deviceId = "36";
+    private String token = "";
 
-    //控制音乐播放器
-    private void commandMusicPlayer(String command){
-        L.i("控制音乐播放器:"+command);
-        switch (command){
-            case "next":      //下一曲
-                if (currentPlaySongIndex==(musicListSize-1)){
-                    currentPlaySongIndex = 0;
-                }else {
-                    currentPlaySongIndex++;
-                }
-                Toast.makeText(this, "哪一首："+currentPlaySongIndex, Toast.LENGTH_SHORT).show();
-                playingmusic(MusicPlayerService.NEXT_MUSIC,musicUrl.get(currentPlaySongIndex));
-                break;
-            case "prev":      //上一曲
-                if (currentPlaySongIndex==0){
-                    currentPlaySongIndex = musicListSize-1;
-                }else {
-                    currentPlaySongIndex--;
-                }
-                Toast.makeText(this, "哪一首："+currentPlaySongIndex, Toast.LENGTH_SHORT).show();
-                playingmusic(MusicPlayerService.NEXT_MUSIC,musicUrl.get(currentPlaySongIndex));
-                break;
-            case "down":
-                L.i("音量减");
-                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_LOWER,
-                        AudioManager.FX_FOCUS_NAVIGATION_UP);
-                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_LOWER,
-                        AudioManager.FX_FOCUS_NAVIGATION_UP);
-                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_LOWER,
-                        AudioManager.FX_FOCUS_NAVIGATION_UP);
-                currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                Toast.makeText(this, "当前音量"+currentVolume, Toast.LENGTH_SHORT).show();
-                break;
-            case "up":
-                L.i("音量加");
-                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_RAISE,
-                        AudioManager.FX_FOCUS_NAVIGATION_UP);
-                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_RAISE,
-                        AudioManager.FX_FOCUS_NAVIGATION_UP);
-                mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,AudioManager.ADJUST_RAISE,
-                        AudioManager.FX_FOCUS_NAVIGATION_UP);
-                currentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                Toast.makeText(this, "当前音量"+currentVolume, Toast.LENGTH_SHORT).show();
-                break;
-            case "pause":
-                playingmusic(MusicPlayerService.PAUSE_MUSIC,"");
-                break;
-            case "stop":
-                playingmusic(MusicPlayerService.STOP_MUSIC,"");
-                break;
-            case "play":
-                playingmusic(MusicPlayerService.RESUME_MUSIC,"");
-                playingmusic(MusicPlayerService.RECOVER_MUSIC_VOLUME,"");   //恢复音乐音量
-                break;
-            case "max":
-                currentVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND);
-                break;
-            case "mini":
-                currentVolume = 0;
-                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND);
-                break;
-        }
-    }
-
-
-    //yeelight彩光灯带的控制
-    public void yeelightStripeControl(JSONObject device) {
-        // 2017/9/15 控制yeelight设备方法
-        //yeelight彩光灯带的控制
-        L.i("***************yeelight彩光灯带的控制******************");
-        String command_code = null;
-        String did=null;
-        try {
-            command_code = device.getString("command_code");
-            did = device.getString("did");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Iterator<YeelightStripeIpAndPortBean> yeelightIt=yeelightStripeMap.values().iterator();
-        L.i("*************************yeelightStripeMap.size()*****"+yeelightStripeMap.size());
-        if(did==null||"".equals(did.trim())){
-            return;
-        }
-
-        YeelightStripeIpAndPortBean yeelightStripeIpAndPortBean=yeelightStripeMap.get(did);
-
-        L.logE("*************did*****"+did);
-        Iterator<String> keyIt=yeelightStripeMap.keySet().iterator();
-        while(keyIt.hasNext()){
-            String yeelightKey=keyIt.next();
-            L.logE("********************yeelightStripeMap**key*"+yeelightKey);
-            L.logE("********************yeelightStripeMap**key*"+(did.equals(yeelightKey)));
-        }
-        if(yeelightStripeIpAndPortBean==null){
-            return;
-        }
-        String ip = yeelightStripeIpAndPortBean.getIp();
-        String port = yeelightStripeIpAndPortBean.getPort();
-        bright = yeelightStripeIpAndPortBean.getBright();
-        String ct = yeelightStripeIpAndPortBean.getCt();
-        String hue = yeelightStripeIpAndPortBean.getHue();
-
-        //控制部分
-        if ("1".equals(command_code)) {
-            //开灯
-            L.i("********打开灯::" + ip + "::" + port);
-            YeelightControl.getInstance(app,iGetYeelight).connectAndControl(ip,Integer.parseInt(port),true,-1,-1,-1);
-        } else if ("0".equals(command_code)) {
-            //关灯
-            L.i("********关闭灯::" + ip + "::" + port);
-            YeelightControl.getInstance(app,iGetYeelight).connectAndControl(ip,Integer.parseInt(port),false,-1,-1,-1);
-        } else if ("2".equals(command_code)) {
-            //调亮
-//            L.i("11111111111111111111111111" + bright);
-            YeelightControl.getInstance(app, new IGetYeelight() {
-                @Override
-                public void getInfoList(List<YeelightDeviceBean> templist) {
-
-                }
-
-                @Override
-                public void getIpAndDevice(YeelightDeviceBean yeelightDeviceBean) {
-                    int brightnew = yeelightDeviceBean.getBright();
-                    bright = brightnew;
-                }
-
-                @Override
-                public void getResponse(String value) {
-
-                }
-            }).searchDevice();
-            if (bright <= 50) {
-                L.i("调亮灯");
-                YeelightControl.getInstance(app, iGetYeelight).connectAndControl(ip, Integer.parseInt(port), false, 80, -1, -1);
-            }
-        } else if ("3".equals(command_code)) {
-            //调暗
-            L.i("22222222222222222222222222");
-            YeelightControl.getInstance(app, new IGetYeelight() {
-                @Override
-                public void getInfoList(List<YeelightDeviceBean> templist) {
-
-                }
-
-                @Override
-                public void getIpAndDevice(YeelightDeviceBean yeelightDeviceBean) {
-                    int brightnew = yeelightDeviceBean.getBright();
-                    bright = brightnew;
-                }
-
-                @Override
-                public void getResponse(String value) {
-
-                }
-            }).searchDevice();
-            if (bright > 50) {
-                L.i("调暗灯");
-                YeelightControl.getInstance(app, iGetYeelight).connectAndControl(ip, Integer.parseInt(port), false, 30, -1, -1);
-            }
-        } else if ("4".equals(command_code)) {
-            //调成红色
-            L.i("调成红色");
-            YeelightControl.getInstance(app, iGetYeelight).connectAndControl(ip, Integer.parseInt(port), false, -1, 0, -1);
-        } else if ("5".equals(command_code)) {
-            //调成绿色
-            L.i("调成绿色");
-            YeelightControl.getInstance(app, iGetYeelight).connectAndControl(ip, Integer.parseInt(port), false, -1, 110, -1);
-        } else if ("6".equals(command_code)) {
-            //调成蓝色
-            L.i("调成蓝色");
-            YeelightControl.getInstance(app, iGetYeelight).connectAndControl(ip, Integer.parseInt(port), false, -1, 230, -1);
-        }
-    }
-
-
-    //绑定设备
-    private void bindDevice(){
-
-        String mac = Mac.getMac();
-        L.i("mac地址为："+mac+"---------"+ NetworkStateUtil.getLocalMacAddressFromWifiInfo(MainActivity.this));
-
+    //用户新增消息
+    private void messageCreat(String speech){
         String timeStamp = SignAndEncrypt.getTimeStamp();
-        LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-        params.put("method", "account/device/create");
-        params.put("api_key", ApiManager.api_key);
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("method", "message/from_user/create");
+        params.put("api_key", ApiManager.dialog_manage_api_key);
         params.put("timestamp", timeStamp);
+        params.put("version",ApiManager.VERSION);
 
-        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-        List<LinkedHashMap> devices = new ArrayList<>();
-
-        LinkedHashMap<String, Object> mapDevices = new LinkedHashMap<>();
-        mapDevices.put("identifier",mac);
-        mapDevices.put("did","");
-        mapDevices.put("nickname","声智开发板");
-        mapDevices.put("pid","");
-        mapDevices.put("mac",mac);
-        mapDevices.put("device_name","fitmeSound");
-        mapDevices.put("device_lock","");
-        mapDevices.put("device_type","");
-        mapDevices.put("category","");
-        mapDevices.put("command","");
-        mapDevices.put("command_code","");
-        mapDevices.put("user_group","客厅");
-        devices.add(mapDevices);
-
-        map.put("user_id", "1067");  //15308630310的userid:1067     13071860782userid:445
-        map.put("devices", devices);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("message_id", CreateMessageIdUtils.getMessageId(userId,this));
+        map.put("user_id", userId);
+        map.put("token", token);
+        map.put("device_id", deviceId);
+        map.put("x", 1200002200);
+        map.put("y", 302873830);
+        map.put("speech", speech);
+        map.put("member_id", "");
+        map.put("intent", "");
+        map.put("slots", null);
 
         Gson gson = new Gson();
-        params.put("http_body", gson.toJson(map));
-        L.i("http_body:"+gson.toJson(map));
-        String sign = SignAndEncrypt.signRequest(params, ApiManager.api_secret);
-        ApiManager.fitmeApiService.deviceBind(ApiManager.api_key, timeStamp, sign, map)
+        params.put("http_body",gson.toJson(map));
+
+        String sign = SignAndEncrypt.signRequest(params, ApiManager.dialog_manage_api_secret);
+        ApiManager.DialogManagerService.messageCreate(ApiManager.dialog_manage_api_key, timeStamp,sign,ApiManager.VERSION,map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ResponseBody>() {
@@ -1667,41 +936,306 @@ public class MainActivity extends Activity {
 
                     @Override
                     public void onError(Throwable e) {
+                        L.i("e:"+e.toString());
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
-                            L.i("服务器回复："+responseBody.string());
+                            String res = responseBody.string();
+                            L.i("消息res:"+res);
+                            JSONObject object = new JSONObject(res);
+                            String status = object.getString("status");
+                            L.i("status:"+status);
+                            if ("success".equals(status)){
+                                //请求成功，将当前请求的次数设置为0
+                                L.i("请求成功!!!");
+                                nowTime = 0;
+                                handler.removeCallbacks(task);
+                                handler.post(task);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    String url = "";
+    //用户新增消息
+    private void getMessage(){
+        String timeStamp = SignAndEncrypt.getTimeStamp();
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("method", "message/to_user");
+        params.put("api_key", ApiManager.notification_api_key);
+        params.put("timestamp", timeStamp);
+        params.put("version",ApiManager.VERSION);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("user_id", userId);
+        map.put("device_id", deviceId);
+        map.put("token", token);
+        map.put("max_count", 1);
+
+        Gson gson = new Gson();
+        params.put("http_body",gson.toJson(map));
+
+        String sign = SignAndEncrypt.signRequest(params, ApiManager.notification_api_secret);
+        ApiManager.NotificationService.getMessage(ApiManager.notification_api_key, timeStamp,sign,ApiManager.VERSION,map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        L.i("e:"+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody messageGet) {
+                        try {
+                            String res = messageGet.string();
+                            L.i("messageGEt:"+res);
+                            JSONObject object = new JSONObject(res);
+                            JSONArray array = object.getJSONArray("messages");
+                            for (int i=0;i<array.length();i++){
+                                JSONObject message = array.getJSONObject(i);
+                                String messageId = message.getString("message_id");
+                                L.i("messageId:"+messageId);
+                                messageArrived(messageId);
+                            }
+                            JSONObject message = array.getJSONObject(0);
+                            String message_type = message.getString("message_type");
+                            L.i("message_type:"+message_type);
+                            if ("api_call_action".equals(message_type)){
+                                //播放url
+                                JSONObject message_body = message.getJSONObject("message_body");
+                                JSONObject slots = message_body.getJSONObject("slots");
+                                url = slots.getString("url");
+                                playingmusic(MusicPlayerService.PLAT_MUSIC,url);
+                            }else if ("speech/url_img_title_h1".equals(message_type)){
+                                //取speach
+                                String speech = message.getJSONObject("message_body").getString("speech");
+                                fitme_result.setText(speech);
+                                wordsToVoice.startSynthesizer(speech,mTtsListener);
+                                Toast.makeText(MainActivity.this, speech, Toast.LENGTH_LONG).show();
+                                L.i("取speach");
+                            }
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+    //用户确认消息到达
+    private void messageArrived(String messageId){
+        String timeStamp = SignAndEncrypt.getTimeStamp();
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("method", "message_arrived/create");
+        params.put("api_key", ApiManager.notification_api_key);
+        params.put("timestamp", timeStamp);
+        params.put("version",ApiManager.VERSION);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("message_id", messageId);
+        map.put("user_id", userId);
+        map.put("token", token);
+
+        Gson gson = new Gson();
+        params.put("http_body",gson.toJson(map));
+
+        String sign = SignAndEncrypt.signRequest(params, ApiManager.notification_api_secret);
+        ApiManager.NotificationService.messageArrived(ApiManager.notification_api_key, timeStamp,sign,ApiManager.VERSION,map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        L.i("e:"+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String res = responseBody.string();
+                            L.i("res:"+res);
+                            JSONObject object = new JSONObject(res);
+                            String status = object.getString("status");
+                            if ("success".equals(status)){
+
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
+
+    //切换下一曲
+    private void mediaNext(String perUrl){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("user_id", "36");
+        map.put("device_id", "36");
+        map.put("url", perUrl);
+
+        ApiManager.MediaPlayerService.mediaNext(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        L.i("e:"+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String res = responseBody.string();
+                            L.i("mediaNext:"+res);
+                            JSONObject object = null;
+                            try {
+                                object = new JSONObject(res);
+                                if (object.getInt("code")==200){
+                                    url = object.getJSONObject("data").getString("url");
+                                    playingmusic(MusicPlayerService.PLAT_MUSIC,url);
+
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-
                 });
     }
 
-    //正则判断场景
-    private boolean scene(String sendMsg,String regEx) {
-        Pattern pattern = Pattern.compile(regEx);
-        Matcher matcher = pattern.matcher(sendMsg);
-        // 查找字符串中是否有匹配正则表达式的字符/字符串
-        boolean rs = matcher.find();
-        //L.i("是否找到该字符："+rs);
-        return rs;
+    //切换上一曲
+    private void mediaPlayPrevious(String url){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("user_id", "36");
+        map.put("device_id", "36");
+        map.put("url", "http://od.open.qingting.fm/m4a/5a13a8667cb8914777e63dce_8254257_64.m4a?u=865&channelId=231024&programId=8087152");
+
+        ApiManager.MediaPlayerService.mediaPlayPrevious(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        L.i("e:"+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String res = responseBody.string();
+                            L.i("mediaNext:"+res);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
-    //多正则判断
-    private boolean sceneALL(String sendMsg,List<BLFamilyModuleInfo> info){
-        boolean isFind = false;
-        for (int i=0;i<info.size();i++){
-            if (scene(sendMsg,info.get(i).getName())){
-                isFind = true;
-            }
-        }
-        return isFind;
+    //上传暂停播放状态
+    private void mediaPause(int position){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("user_id", "36");
+        map.put("device_id", "36");
+        map.put("position", position);
+
+        ApiManager.MediaPlayerService.mediaPause(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        L.i("e:"+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String res = responseBody.string();
+                            L.i("mediaPause:"+res);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
+
+    //继续播放
+    private void mediaContinue(int position){
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("user_id", "36");
+        map.put("device_id", "36");
+        map.put("position", position);
+
+        ApiManager.MediaPlayerService.mediaContinue(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        L.i("e:"+e.toString());
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String res = responseBody.string();
+                            L.i("mediaPause:"+res);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

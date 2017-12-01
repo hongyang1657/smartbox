@@ -4,8 +4,24 @@
         "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout-v11\\notification_template_big_media_custom.xml"
     },
     {
+        "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_narrow_custom.xml",
+        "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout-v11\\notification_template_big_media_narrow_custom.xml"
+    },
+    {
+        "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_narrow.xml",
+        "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout-v11\\notification_template_big_media_narrow.xml"
+    },
+    {
         "merged": "C:\\FitmeSound\\smartbox_zhanhui\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_narrow.xml",
         "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout-v11\\notification_template_big_media_narrow.xml"
+    },
+    {
+        "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media.xml",
+        "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout-v11\\notification_template_big_media.xml"
+    },
+    {
+        "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_custom.xml",
+        "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout-v11\\notification_template_big_media_custom.xml"
     },
     {
         "merged": "C:\\FitmeSound\\smartbox_zhanhui\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_action.xml",
@@ -14,6 +30,14 @@
     {
         "merged": "C:\\FitmeSound\\smartbox_zhanhui\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_cancel_action.xml",
         "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout-v11\\notification_media_cancel_action.xml"
+    },
+    {
+        "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_cancel_action.xml",
+        "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout-v11\\notification_media_cancel_action.xml"
+    },
+    {
+        "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_media_action.xml",
+        "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout-v11\\notification_media_action.xml"
     },
     {
         "merged": "C:\\FitmeSound\\smartbox_zhanhui\\app\\build\\intermediates\\res\\merged\\debug\\layout-v11\\notification_template_big_media_narrow_custom.xml",

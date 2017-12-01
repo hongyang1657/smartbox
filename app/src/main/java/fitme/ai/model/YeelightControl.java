@@ -140,7 +140,10 @@ public class YeelightControl {
                         deviceBean.setPid(yeelightDeviceBean.getId().trim());
                         deviceBean.setDevice_type_number(yeelightDeviceBean.getModel().trim());
                         deviceBean.setDevice_lock(false);
-                        application.setBldnaDevice(deviceBean);
+                        L.i("111111111111111"+deviceBean);
+                        if (null!=deviceBean){
+                            application.setBldnaDevice(deviceBean);
+                        }
 //                        HashMap<String,String> contolInfoMap = new HashMap<>();
 //                        contolInfoMap.put("Location",yeelightDeviceBean.getLocation().trim());
 //                        contolInfoMap.put("bright",)
