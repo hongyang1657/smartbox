@@ -4,24 +4,24 @@
         "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout\\abc_alert_dialog_material.xml"
     },
     {
-        "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_layout.xml",
-        "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout\\abc_list_menu_item_layout.xml"
-    },
-    {
         "merged": "C:\\FitmeSound\\smartbox_zhanhui\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action_tombstone.xml",
         "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_layout.xml",
+        "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout\\abc_list_menu_item_layout.xml"
     },
     {
         "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_bar.xml",
         "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout\\abc_action_mode_bar.xml"
     },
     {
-        "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
-        "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout\\support_simple_spinner_dropdown_item.xml"
-    },
-    {
         "merged": "C:\\FitmeSound\\smartbox_zhanhui\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_view.xml",
         "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout\\abc_search_view.xml"
+    },
+    {
+        "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
+        "source": "C:\\Users\\hongy\\.android\\build-cache\\fc92daf5a102fa71ab52796d95b8948d621f4d0b\\output\\res\\layout\\support_simple_spinner_dropdown_item.xml"
     },
     {
         "merged": "C:\\FitmeSound\\smartbox_dev\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_expanded_menu_layout.xml",

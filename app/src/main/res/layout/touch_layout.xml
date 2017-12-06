@@ -8,6 +8,7 @@
     <ImageView
         android:id="@+id/tv_touch"
         android:clickable="true"
+        android:background="#000000"
         android:src="@drawable/cycler"
         android:scaleType="fitCenter"
         android:layout_width="match_parent"
